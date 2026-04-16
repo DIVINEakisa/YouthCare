@@ -105,13 +105,13 @@ export default function MentalHealth() {
   ];
 
   return (
-    <div className="min-h-screen bg-emerald-800 p-4">
+    <div className="min-h-screen p-4" style={{ background: '#3f6212' }}>
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-8">Mental Health Support 🧠</h1>
 
         {/* Mood Tracker */}
         <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-          <h2 className="text-2xl font-bold text-emerald-800 mb-6">How Are You Feeling Today?</h2>
+          <h2 className="text-2xl font-bold mb-6" style={{ color: '#3f6212' }}>How Are You Feeling Today?</h2>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
             {moods.map((mood, index) => (
@@ -120,9 +120,10 @@ export default function MentalHealth() {
                 onClick={() => setSelectedMood(mood)}
                 className={`p-6 rounded-lg font-semibold transition transform hover:scale-110 ${
                   selectedMood?.label === mood.label
-                    ? 'bg-emerald-800 text-white scale-110'
+                    ? 'text-white scale-110'
                     : 'bg-gray-100 text-gray-800 hover:bg-gray-200'
                 }`}
+                style={selectedMood?.label === mood.label ? { background: '#3f6212' } : {}}"
               >
                 <div className="text-4xl mb-2">{mood.emoji}</div>
                 <div>{mood.label}</div>
@@ -132,12 +133,12 @@ export default function MentalHealth() {
 
           {/* Tips based on mood */}
           {selectedMood && (
-            <div className="bg-emerald-50 border-2 border-emerald-800 rounded-lg p-6">
-              <h3 className="text-lg font-bold text-emerald-800 mb-4">Tips for You:</h3>
+            <div className="rounded-lg p-6" style={{ background: '#f0fde8', border: '2px solid #3f6212' }}>
+              <h3 className="text-lg font-bold mb-4" style={{ color: '#3f6212' }}>Tips for You:</h3>
               <ul className="space-y-2">
                 {selectedMood.tips.map((tip, index) => (
                   <li key={index} className="text-gray-700 flex items-start gap-2">
-                    <span className="text-emerald-800 font-bold">✓</span>
+                    <span className="font-bold" style={{ color: '#3f6212' }}>✓</span>
                     <span>{tip}</span>
                   </li>
                 ))}
@@ -153,7 +154,7 @@ export default function MentalHealth() {
             {relaxationTechniques.map((technique, index) => (
               <div key={index} className="bg-white rounded-lg shadow-lg p-6">
                 <div className="text-4xl mb-3">{technique.icon}</div>
-                <h3 className="font-bold text-emerald-800 mb-2">{technique.title}</h3>
+                <h3 className="font-bold mb-2" style={{ color: '#3f6212' }}>{technique.title}</h3>
                 <p className="text-gray-700 text-sm">{technique.description}</p>
               </div>
             ))}
@@ -162,12 +163,12 @@ export default function MentalHealth() {
 
         {/* Mental Health Resources */}
         <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-          <h2 className="text-2xl font-bold text-emerald-800 mb-6">Mental Health Resources</h2>
+          <h2 className="text-2xl font-bold mb-6" style={{ color: '#3f6212' }}>Mental Health Resources</h2>
           
           <div className="grid md:grid-cols-2 gap-6 mb-8">
             {/* Coping Strategies */}
-            <div className="border-2 border-emerald-800 rounded-lg p-6">
-              <h3 className="text-lg font-bold text-emerald-800 mb-3">Daily Coping Strategies</h3>
+            <div className="rounded-lg p-6" style={{ border: '2px solid #3f6212' }}>
+              <h3 className="text-lg font-bold mb-3" style={{ color: '#3f6212' }}>Daily Coping Strategies</h3>
               <ul className="space-y-2 text-gray-700 text-sm">
                 <li>• Keep a journal of your feelings</li>
                 <li>• Set realistic daily goals</li>
@@ -196,7 +197,10 @@ export default function MentalHealth() {
           {/* Professional Help */}
           <button
             onClick={() => setShowTherapist(!showTherapist)}
-            className="w-full bg-emerald-800 text-white font-semibold py-3 rounded-lg hover:bg-emerald-900 transition"
+            className="w-full text-white font-semibold py-3 rounded-lg transition"
+            style={{ background: '#3f6212' }}
+            onMouseEnter={(e) => e.target.style.background = '#2d4a0e'}
+            onMouseLeave={(e) => e.target.style.background = '#3f6212'}
           >
             {showTherapist ? 'Hide' : 'Talk to a Therapist'} 💬
           </button>
@@ -204,8 +208,8 @@ export default function MentalHealth() {
           {showTherapist && (
             <div className="mt-6 space-y-4">
               {therapists.map((therapist, index) => (
-                <div key={index} className="bg-emerald-50 rounded-lg p-4 border-l-4 border-emerald-800">
-                  <h3 className="font-bold text-emerald-800">{therapist.name}</h3>
+                <div key={index} className="rounded-lg p-4" style={{ background: '#f0fde8', borderLeft: '4px solid #3f6212' }}>
+                  <h3 className="font-bold" style={{ color: '#3f6212' }}>{therapist.name}</h3>
                   <p className="text-gray-700 text-sm mt-2">
                     <strong>Phone:</strong> {therapist.phone}
                   </p>

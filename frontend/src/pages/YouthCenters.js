@@ -47,14 +47,14 @@ export default function YouthCenters() {
   ];
 
   return (
-    <div className="min-h-screen bg-emerald-800 p-4">
+    <div className="min-h-screen p-4" style={{ background: '#3f6212' }}>
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-2">Youth Centers (Maison des Jeunes) 👥</h1>
-        <p className="text-emerald-100 mb-8">Find activities and programs in your community</p>
+        <p className="mb-8" style={{ color: '#f0fde8' }}>Find activities and programs in your community</p>
 
         {/* Info Card */}
         <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-          <h2 className="text-xl font-bold text-emerald-800 mb-3">Why Join a Youth Center?</h2>
+          <h2 className="text-xl font-bold mb-3" style={{ color: '#3f6212' }}>Why Join a Youth Center?</h2>
           <div className="grid md:grid-cols-2 gap-4 text-gray-700">
             <div>
               <p className="mb-3">Youth centers (Maison des Jeunes) are community spaces designed for young people. They offer:</p>
@@ -81,7 +81,7 @@ export default function YouthCenters() {
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {centers.map((center, index) => (
             <div key={index} className="bg-white rounded-lg shadow-lg p-6 hover:shadow-xl transition">
-              <h3 className="text-lg font-bold text-emerald-800 mb-2">{center.name}</h3>
+              <h3 className="text-lg font-bold mb-2" style={{ color: '#3f6212' }}>{center.name}</h3>
               
               <p className="text-gray-600 text-sm mb-4">📍 {center.location}</p>
 
@@ -89,7 +89,7 @@ export default function YouthCenters() {
                 <p className="text-sm font-semibold text-gray-700 mb-2">Activities:</p>
                 <div className="flex flex-wrap gap-2">
                   {center.activities.map((activity, i) => (
-                    <span key={i} className="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">
+                    <span key={i} className="text-xs px-2 py-1 rounded" style={{ background: '#f0fde8', color: '#3f6212' }}>
                       {activity}
                     </span>
                   ))}
@@ -103,7 +103,10 @@ export default function YouthCenters() {
 
               <button
                 onClick={() => alert(`Contact: ${center.contact}`)}
-                className="w-full bg-emerald-800 text-white px-4 py-2 rounded-lg font-semibold hover:bg-emerald-900 transition text-sm"
+                className="w-full text-white px-4 py-2 rounded-lg font-semibold transition text-sm"
+                style={{ background: '#3f6212' }}
+                onMouseEnter={(e) => e.target.style.background = '#2d4a0e'}
+                onMouseLeave={(e) => e.target.style.background = '#3f6212'}"
               >
                 Get Info
               </button>
@@ -113,7 +116,7 @@ export default function YouthCenters() {
 
         {/* Getting Involved */}
         <div className="mt-12 bg-white rounded-lg shadow-lg p-8">
-          <h2 className="text-2xl font-bold text-emerald-800 mb-6">How to Get Involved</h2>
+          <h2 className="text-2xl font-bold mb-6" style={{ color: '#3f6212' }}>How to Get Involved</h2>
           <div className="grid md:grid-cols-4 gap-4">
             <div className="text-center p-4 border-2 border-emerald-800 rounded-lg">
               <div className="text-3xl mb-2">🔍</div>

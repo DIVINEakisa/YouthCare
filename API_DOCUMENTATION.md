@@ -1,12 +1,15 @@
 # YouthCare+ API Documentation
 
 ## Base URL
+
 ```
 http://localhost:5000/api
 ```
 
 ## Authentication
+
 All protected endpoints require a Bearer token in the Authorization header:
+
 ```
 Authorization: Bearer <token>
 ```
@@ -16,11 +19,13 @@ Authorization: Bearer <token>
 ## Authentication Endpoints
 
 ### 1. Register User
+
 Create a new user account.
 
 **Endpoint:** `POST /auth/register`
 
 **Request Body:**
+
 ```json
 {
   "name": "string (required)",
@@ -32,6 +37,7 @@ Create a new user account.
 ```
 
 **Example:**
+
 ```json
 {
   "name": "Jane Doe",
@@ -43,6 +49,7 @@ Create a new user account.
 ```
 
 **Success Response (201 Created):**
+
 ```json
 {
   "message": "User registered successfully",
@@ -58,6 +65,7 @@ Create a new user account.
 ```
 
 **Error Response (400):**
+
 ```json
 {
   "message": "User already exists"
@@ -67,11 +75,13 @@ Create a new user account.
 ---
 
 ### 2. Login User
+
 Authenticate user and get JWT token.
 
 **Endpoint:** `POST /auth/login`
 
 **Request Body:**
+
 ```json
 {
   "email": "string (required)",
@@ -80,6 +90,7 @@ Authenticate user and get JWT token.
 ```
 
 **Example:**
+
 ```json
 {
   "email": "jane@example.com",
@@ -88,6 +99,7 @@ Authenticate user and get JWT token.
 ```
 
 **Success Response (200 OK):**
+
 ```json
 {
   "message": "Login successful",
@@ -103,6 +115,7 @@ Authenticate user and get JWT token.
 ```
 
 **Error Response (400):**
+
 ```json
 {
   "message": "Invalid credentials"
@@ -112,16 +125,19 @@ Authenticate user and get JWT token.
 ---
 
 ### 3. Get Current User
+
 Retrieve authenticated user information.
 
 **Endpoint:** `GET /auth/me`
 
 **Headers:**
+
 ```
 Authorization: Bearer <token>
 ```
 
 **Success Response (200 OK):**
+
 ```json
 {
   "_id": "507f1f77bcf86cd799439011",
@@ -134,6 +150,7 @@ Authorization: Bearer <token>
 ```
 
 **Error Response (401):**
+
 ```json
 {
   "message": "Token is not valid"
@@ -145,17 +162,20 @@ Authorization: Bearer <token>
 ## Chat Endpoints
 
 ### 1. Send Chat Message
+
 Send a message to the AI chatbot.
 
 **Endpoint:** `POST /chat/send`
 
 **Headers:**
+
 ```
 Authorization: Bearer <token>
 Content-Type: application/json
 ```
 
 **Request Body:**
+
 ```json
 {
   "message": "string (required)"
@@ -163,6 +183,7 @@ Content-Type: application/json
 ```
 
 **Example:**
+
 ```json
 {
   "message": "What should I know about my period?"
@@ -170,6 +191,7 @@ Content-Type: application/json
 ```
 
 **Success Response (200 OK):**
+
 ```json
 {
   "message": "It's important to understand your body. Menstruation is a natural process...",
@@ -189,6 +211,7 @@ Content-Type: application/json
 ```
 
 **Error Response (500):**
+
 ```json
 {
   "message": "Server error",
@@ -199,16 +222,19 @@ Content-Type: application/json
 ---
 
 ### 2. Get Chat History
+
 Retrieve chat conversation history.
 
 **Endpoint:** `GET /chat/history`
 
 **Headers:**
+
 ```
 Authorization: Bearer <token>
 ```
 
 **Success Response (200 OK):**
+
 ```json
 {
   "messages": [
@@ -227,6 +253,7 @@ Authorization: Bearer <token>
 ```
 
 **Empty Response (200 OK):**
+
 ```json
 {
   "messages": []
@@ -238,17 +265,20 @@ Authorization: Bearer <token>
 ## Cycle Tracker Endpoints
 
 ### 1. Update Cycle Information
+
 Update or create cycle tracking data.
 
 **Endpoint:** `POST /cycle-tracker/update`
 
 **Headers:**
+
 ```
 Authorization: Bearer <token>
 Content-Type: application/json
 ```
 
 **Request Body:**
+
 ```json
 {
   "lastPeriodDate": "string (required, format: YYYY-MM-DD)",
@@ -257,6 +287,7 @@ Content-Type: application/json
 ```
 
 **Example:**
+
 ```json
 {
   "lastPeriodDate": "2024-01-15",
@@ -265,6 +296,7 @@ Content-Type: application/json
 ```
 
 **Success Response (200 OK):**
+
 ```json
 {
   "message": "Cycle tracker updated successfully",
@@ -286,6 +318,7 @@ Content-Type: application/json
 ```
 
 **Error Response (500):**
+
 ```json
 {
   "message": "Server error",
@@ -296,16 +329,19 @@ Content-Type: application/json
 ---
 
 ### 2. Get Cycle Tracker Information
+
 Retrieve cycle tracking data and predictions.
 
 **Endpoint:** `GET /cycle-tracker/get`
 
 **Headers:**
+
 ```
 Authorization: Bearer <token>
 ```
 
 **Success Response (200 OK):**
+
 ```json
 {
   "tracker": {
@@ -326,6 +362,7 @@ Authorization: Bearer <token>
 ```
 
 **No Data Response (200 OK):**
+
 ```json
 {
   "message": "No cycle data found"
@@ -333,6 +370,7 @@ Authorization: Bearer <token>
 ```
 
 **Error Response (404 or 500):**
+
 ```json
 {
   "message": "Server error",
@@ -345,9 +383,11 @@ Authorization: Bearer <token>
 ## Health Check Endpoint
 
 ### Check Backend Status
+
 **Endpoint:** `GET /health`
 
 **Success Response (200 OK):**
+
 ```json
 {
   "message": "YouthCare+ Backend is running"
@@ -358,20 +398,21 @@ Authorization: Bearer <token>
 
 ## Error Codes
 
-| Code | Meaning |
-|------|---------|
-| 200 | OK - Request successful |
-| 201 | Created - Resource created successfully |
-| 400 | Bad Request - Invalid input data |
-| 401 | Unauthorized - Missing or invalid token |
-| 404 | Not Found - Resource not found |
-| 500 | Server Error - Internal server error |
+| Code | Meaning                                 |
+| ---- | --------------------------------------- |
+| 200  | OK - Request successful                 |
+| 201  | Created - Resource created successfully |
+| 400  | Bad Request - Invalid input data        |
+| 401  | Unauthorized - Missing or invalid token |
+| 404  | Not Found - Resource not found          |
+| 500  | Server Error - Internal server error    |
 
 ---
 
 ## Common Error Responses
 
 ### Missing Token
+
 ```json
 {
   "message": "No authentication token, access denied"
@@ -379,6 +420,7 @@ Authorization: Bearer <token>
 ```
 
 ### Invalid Token
+
 ```json
 {
   "message": "Token is not valid"
@@ -386,6 +428,7 @@ Authorization: Bearer <token>
 ```
 
 ### Validation Error
+
 ```json
 {
   "message": "Validation failed",
@@ -398,6 +441,7 @@ Authorization: Bearer <token>
 ## Rate Limiting
 
 Current implementation has no rate limiting. For production, consider implementing:
+
 - 100 requests per 15 minutes for authenticated users
 - 20 requests per 15 minutes for unauthenticated endpoints
 
@@ -412,15 +456,19 @@ JWT tokens expire after **7 days**. Users need to login again to get a new token
 ## CORS Configuration
 
 Currently allows requests from:
+
 - http://localhost:3000
 - All origins in development
 
 For production, update in `server.js`:
+
 ```javascript
-app.use(cors({
-  origin: ['https://yourdomain.com'],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: ["https://yourdomain.com"],
+    credentials: true,
+  }),
+);
 ```
 
 ---
@@ -428,6 +476,7 @@ app.use(cors({
 ## Request Examples using cURL
 
 ### Register
+
 ```bash
 curl -X POST http://localhost:5000/api/auth/register \
   -H "Content-Type: application/json" \
@@ -435,6 +484,7 @@ curl -X POST http://localhost:5000/api/auth/register \
 ```
 
 ### Login
+
 ```bash
 curl -X POST http://localhost:5000/api/auth/login \
   -H "Content-Type: application/json" \
@@ -442,6 +492,7 @@ curl -X POST http://localhost:5000/api/auth/login \
 ```
 
 ### Send Chat Message
+
 ```bash
 curl -X POST http://localhost:5000/api/chat/send \
   -H "Authorization: Bearer YOUR_TOKEN" \
@@ -450,6 +501,7 @@ curl -X POST http://localhost:5000/api/chat/send \
 ```
 
 ### Update Cycle Tracker
+
 ```bash
 curl -X POST http://localhost:5000/api/cycle-tracker/update \
   -H "Authorization: Bearer YOUR_TOKEN" \
@@ -462,47 +514,49 @@ curl -X POST http://localhost:5000/api/cycle-tracker/update \
 ## Request Examples using Axios (JavaScript)
 
 ```javascript
-import axios from 'axios';
+import axios from "axios";
 
-const API_URL = 'http://localhost:5000/api';
+const API_URL = "http://localhost:5000/api";
 
 // Register
 axios.post(`${API_URL}/auth/register`, {
-  name: 'Jane',
+  name: "Jane",
   age: 20,
-  gender: 'Female',
-  email: 'jane@example.com',
-  password: 'pass123'
+  gender: "Female",
+  email: "jane@example.com",
+  password: "pass123",
 });
 
 // Login
 const loginResponse = await axios.post(`${API_URL}/auth/login`, {
-  email: 'jane@example.com',
-  password: 'pass123'
+  email: "jane@example.com",
+  password: "pass123",
 });
 const token = loginResponse.data.token;
 
 // Send Chat Message (with token)
-axios.post(`${API_URL}/chat/send`, 
-  { message: 'How do I manage stress?' },
-  { headers: { Authorization: `Bearer ${token}` } }
+axios.post(
+  `${API_URL}/chat/send`,
+  { message: "How do I manage stress?" },
+  { headers: { Authorization: `Bearer ${token}` } },
 );
 
 // Get Chat History
-axios.get(`${API_URL}/chat/history`,
-  { headers: { Authorization: `Bearer ${token}` } }
-);
+axios.get(`${API_URL}/chat/history`, {
+  headers: { Authorization: `Bearer ${token}` },
+});
 
 // Update Cycle Tracker
-axios.post(`${API_URL}/cycle-tracker/update`,
-  { lastPeriodDate: '2024-01-15', cycleLength: 28 },
-  { headers: { Authorization: `Bearer ${token}` } }
+axios.post(
+  `${API_URL}/cycle-tracker/update`,
+  { lastPeriodDate: "2024-01-15", cycleLength: 28 },
+  { headers: { Authorization: `Bearer ${token}` } },
 );
 
 // Get Cycle Tracker
-axios.get(`${API_URL}/cycle-tracker/get`,
-  { headers: { Authorization: `Bearer ${token}` } }
-);
+axios.get(`${API_URL}/cycle-tracker/get`, {
+  headers: { Authorization: `Bearer ${token}` },
+});
 ```
 
 ---
@@ -510,6 +564,7 @@ axios.get(`${API_URL}/cycle-tracker/get`,
 ## Webhooks (Future Feature)
 
 Planned webhooks for notifications:
+
 - `cycle-reminder` - Period prediction reminder
 - `health-tip` - Daily health tip
 - `appointment-reminder` - Appointment reminders
@@ -521,6 +576,7 @@ Planned webhooks for notifications:
 Current version: **v1** (implicit)
 
 For future versions, use:
+
 ```
 /api/v2/auth/login
 ```
@@ -530,6 +586,7 @@ For future versions, use:
 ## Support
 
 For API support or issues:
+
 1. Check request format matches examples
 2. Verify token is valid
 3. Check server logs for errors

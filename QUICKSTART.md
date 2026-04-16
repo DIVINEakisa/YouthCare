@@ -5,12 +5,14 @@
 ### 1. Install Dependencies
 
 **Backend:**
+
 ```bash
 cd backend
 npm install
 ```
 
 **Frontend:**
+
 ```bash
 cd frontend
 npm install
@@ -19,12 +21,14 @@ npm install
 ### 2. Configure Environment Variables
 
 **Backend (.env file):**
+
 ```bash
 cd backend
 cp .env.example .env
 ```
 
 Edit `backend/.env`:
+
 ```
 MONGODB_URI=mongodb://localhost:27017/youthcare
 PORT=5000
@@ -34,12 +38,14 @@ NODE_ENV=development
 ```
 
 **Frontend (.env file):**
+
 ```bash
 cd frontend
 cp .env.example .env
 ```
 
 Edit `frontend/.env`:
+
 ```
 REACT_APP_API_URL=http://localhost:5000/api
 ```
@@ -47,6 +53,7 @@ REACT_APP_API_URL=http://localhost:5000/api
 ### 3. Start MongoDB
 
 Make sure MongoDB is running on your system:
+
 ```bash
 # On Windows
 mongod
@@ -70,6 +77,7 @@ npm run dev
 ```
 
 Expected output:
+
 ```
 Server running on port 5000
 MongoDB Connected: localhost
@@ -83,6 +91,7 @@ npm start
 ```
 
 Expected output:
+
 ```
 Compiled successfully!
 Local:            http://localhost:3000
@@ -108,6 +117,7 @@ The browser should automatically open at `http://localhost:3000`
 ## Testing Features
 
 ### AI Chatbot
+
 1. Click "AI Chatbot" from dashboard
 2. Type a health question, e.g.:
    - "What should I know about my period?"
@@ -115,6 +125,7 @@ The browser should automatically open at `http://localhost:3000`
    - "Tell me about reproductive health"
 
 ### Cycle Tracker (Female Users Only)
+
 1. Click "Cycle Tracker"
 2. Enter your last period date
 3. Adjust cycle length if needed (default: 28 days)
@@ -122,31 +133,37 @@ The browser should automatically open at `http://localhost:3000`
 5. View predictions and tips
 
 ### Educational Content
+
 1. Click "Educational Content"
 2. Switch between categories
 3. Read articles and check video links
 
 ### Mental Health
+
 1. Click "Mental Health"
 2. Select your mood
 3. Read the personalized tips
 
 ### Clinic Finder
+
 1. Click "Clinic Finder"
 2. Browse nearby clinics
 3. Click on a clinic to see full details
 
 ### Youth Centers
+
 1. Click "Youth Centers"
 2. Explore available centers and activities
 
 ### Device Info
+
 1. Click "Device Info"
 2. Learn about the menstrual pain relief device
 
 ## API Endpoints Reference
 
 ### Authentication
+
 ```
 POST /api/auth/register
 POST /api/auth/login
@@ -154,12 +171,14 @@ GET /api/auth/me
 ```
 
 ### Chat
+
 ```
 POST /api/chat/send (body: { message: "..." })
 GET /api/chat/history
 ```
 
 ### Cycle Tracker
+
 ```
 POST /api/cycle-tracker/update (body: { lastPeriodDate: "2024-01-15", cycleLength: 28 })
 GET /api/cycle-tracker/get
@@ -170,6 +189,7 @@ GET /api/cycle-tracker/get
 Visit `http://localhost:5000/api/health` to verify backend is running.
 
 Response:
+
 ```json
 {
   "message": "YouthCare+ Backend is running"
@@ -179,6 +199,7 @@ Response:
 ## Common Issues & Solutions
 
 ### Port 5000 Already in Use
+
 ```bash
 # Find and kill the process using port 5000
 # On Windows
@@ -191,16 +212,19 @@ kill -9 <PID>
 ```
 
 ### MongoDB Connection Failed
+
 - Ensure MongoDB is installed and running
 - Check MongoDB connection string in `.env`
 - Default: `mongodb://localhost:27017/youthcare`
 
 ### Frontend Can't Connect to Backend
+
 - Verify backend is running on port 5000
 - Check `REACT_APP_API_URL` in frontend `.env`
 - Clear browser cache (Ctrl+Shift+Delete)
 
 ### AI Chatbot Returns Mock Responses
+
 - This is expected without an OpenAI API key
 - To use real AI, add your API key to `backend/.env`
 - Get key from: https://platform.openai.com/api-keys

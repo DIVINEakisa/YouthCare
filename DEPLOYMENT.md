@@ -9,6 +9,7 @@ This guide covers deploying YouthCare+ to production environments.
 ### Option 1: Deploy to Heroku
 
 #### Prerequisites
+
 - Heroku account
 - Heroku CLI installed
 - MongoDB Atlas account (cloud MongoDB)
@@ -16,12 +17,14 @@ This guide covers deploying YouthCare+ to production environments.
 #### Steps
 
 1. **Create Heroku App**
+
 ```bash
 cd backend
 heroku create youthcare-backend
 ```
 
 2. **Set Environment Variables**
+
 ```bash
 heroku config:set MONGODB_URI=<your_mongodb_atlas_url>
 heroku config:set JWT_SECRET=<strong_secret_key>
@@ -30,16 +33,19 @@ heroku config:set NODE_ENV=production
 ```
 
 3. **Create Procfile**
+
 ```
 web: node server.js
 ```
 
 4. **Deploy**
+
 ```bash
 git push heroku main
 ```
 
 5. **Check Logs**
+
 ```bash
 heroku logs --tail
 ```
@@ -59,6 +65,7 @@ heroku logs --tail
 4. Clone repository
 5. Set environment variables
 6. Use PM2 to manage process:
+
 ```bash
 npm install -g pm2
 pm2 start server.js --name "youthcare-api"
@@ -71,18 +78,21 @@ pm2 save
 ### Option 1: Deploy to Vercel
 
 #### Prerequisites
+
 - Vercel account
 - GitHub repository connected
 
 #### Steps
 
 1. **Build the frontend**
+
 ```bash
 cd frontend
 npm run build
 ```
 
 2. **Connect to Vercel**
+
 - Go to vercel.com
 - Import project from GitHub
 - Select `frontend` as root directory
@@ -90,6 +100,7 @@ npm run build
   - `REACT_APP_API_URL=<your_backend_url>`
 
 3. **Deploy**
+
 - Click "Deploy"
 
 ### Option 2: Deploy to Netlify
@@ -124,6 +135,7 @@ firebase deploy
 6. Use connection string in `.env`
 
 ### Connection String Format
+
 ```
 mongodb+srv://username:password@cluster.mongodb.net/youthcare?retryWrites=true&w=majority
 ```
@@ -131,6 +143,7 @@ mongodb+srv://username:password@cluster.mongodb.net/youthcare?retryWrites=true&w
 ## Environment Variables for Production
 
 **Backend (.env)**
+
 ```
 MONGODB_URI=mongodb+srv://user:pass@cluster.mongodb.net/youthcare
 PORT=5000
@@ -140,6 +153,7 @@ NODE_ENV=production
 ```
 
 **Frontend (.env.production)**
+
 ```
 REACT_APP_API_URL=https://your-backend-url.com/api
 ```
@@ -161,6 +175,7 @@ REACT_APP_API_URL=https://your-backend-url.com/api
 ## Performance Optimization
 
 ### Backend
+
 ```bash
 # Install compression
 npm install compression
@@ -171,6 +186,7 @@ app.use(compression());
 ```
 
 ### Frontend
+
 ```bash
 # Build for production
 npm run build
@@ -181,11 +197,13 @@ npm run build
 ## Monitoring and Logging
 
 ### Backend Logging
+
 ```bash
 npm install winston
 ```
 
 ### Frontend Error Tracking
+
 - Use Sentry for error tracking
 - Set up analytics
 
@@ -205,36 +223,38 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - uses: actions/checkout@v2
-    
-    - name: Deploy Backend
-      env:
-        MONGODB_URI: ${{ secrets.MONGODB_URI }}
-        JWT_SECRET: ${{ secrets.JWT_SECRET }}
-      run: |
-        cd backend
-        npm install
-        npm test
-        # Deploy command here
-    
-    - name: Deploy Frontend
-      run: |
-        cd frontend
-        npm install
-        npm run build
-        # Deploy command here
+      - uses: actions/checkout@v2
+
+      - name: Deploy Backend
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+          JWT_SECRET: ${{ secrets.JWT_SECRET }}
+        run: |
+          cd backend
+          npm install
+          npm test
+          # Deploy command here
+
+      - name: Deploy Frontend
+        run: |
+          cd frontend
+          npm install
+          npm run build
+          # Deploy command here
 ```
 
 ## Database Backups
 
 ### MongoDB Atlas
+
 - Automatic daily backups (enabled by default)
 - Retention: 7 days
 - Can restore from backup in dashboard
 
 ### Manual Backup
+
 ```bash
 mongodump --uri="<connection_string>" --out=./backup
 mongorestore --uri="<connection_string>" ./backup
@@ -243,6 +263,7 @@ mongorestore --uri="<connection_string>" ./backup
 ## Scaling Considerations
 
 ### For High Traffic
+
 1. Enable database indexing
 2. Implement caching (Redis)
 3. Use CDN for static assets
@@ -250,6 +271,7 @@ mongorestore --uri="<connection_string>" ./backup
 5. Load balancing
 
 ### Database Optimization
+
 ```javascript
 // Add indexes for frequently queried fields
 // In User model
@@ -265,12 +287,14 @@ cycleTrackerSchema.index({ userId: 1 });
 ## SSL/TLS Certificate
 
 ### Using Let's Encrypt
+
 ```bash
 sudo apt-get install certbot python3-certbot-nginx
 sudo certbot certonly --standalone -d yourdomain.com
 ```
 
 ### Using Heroku SSL
+
 ```bash
 heroku certs:add server.crt server.key
 ```
@@ -283,19 +307,23 @@ heroku certs:add server.crt server.key
 4. Configure in backend CORS settings:
 
 ```javascript
-app.use(cors({
-  origin: ['https://youthcare.rw', 'https://app.youthcare.rw'],
-  credentials: true
-}));
+app.use(
+  cors({
+    origin: ["https://youthcare.rw", "https://app.youthcare.rw"],
+    credentials: true,
+  }),
+);
 ```
 
 ## Health Monitoring
 
 ### Check Endpoints
+
 - Backend: `https://api.youthcare.rw/api/health`
 - Frontend: Check page loads correctly
 
 ### Uptime Monitoring
+
 - Use services like UptimeRobot
 - Set alerts for downtime
 
@@ -321,18 +349,21 @@ app.use(cors({
 ## Troubleshooting Deployment
 
 ### Backend not starting
+
 - Check environment variables
 - Verify database connection
 - Check Node.js version compatibility
 - Review server logs
 
 ### Frontend blank page
+
 - Check API URL configuration
 - Verify CORS settings
 - Check browser console for errors
 - Clear cache
 
 ### Slow performance
+
 - Check database indexes
 - Review API response times
 - Check for memory leaks
@@ -341,15 +372,18 @@ app.use(cors({
 ## Rollback Procedures
 
 ### Heroku
+
 ```bash
 heroku releases
 heroku rollback v42
 ```
 
 ### Vercel
+
 - Automatic rollback from dashboard
 
 ### Manual
+
 - Keep previous versions in git
 - Deploy previous commit
 

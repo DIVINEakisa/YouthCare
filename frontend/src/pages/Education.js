@@ -96,7 +96,7 @@ export default function Education() {
   const current = content[selectedCategory];
 
   return (
-    <div className="min-h-screen bg-emerald-800 p-4">
+    <div className="min-h-screen p-4" style={{ background: '#3f6212' }}>
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-8">Educational Content 📚</h1>
 
@@ -108,9 +108,10 @@ export default function Education() {
               onClick={() => setSelectedCategory(key)}
               className={`px-6 py-3 rounded-lg font-semibold transition ${
                 selectedCategory === key
-                  ? 'bg-white text-emerald-800'
-                  : 'bg-emerald-700 text-white hover:bg-emerald-600'
+                  ? 'bg-white'
+                  : 'text-white hover:bg-opacity-80'
               }`}
+              style={selectedCategory === key ? { color: '#3f6212' } : { background: '#2d4a0e' }}"
             >
               {cat.title}
             </button>
@@ -127,7 +128,7 @@ export default function Education() {
                   <div className="flex items-start gap-4">
                     <div className="text-3xl">{article.icon}</div>
                     <div className="flex-1">
-                      <h3 className="text-lg font-bold text-emerald-800 mb-2">{article.title}</h3>
+                      <h3 className="text-lg font-bold mb-2" style={{ color: '#3f6212' }}>{article.title}</h3>
                       <p className="text-gray-700 text-sm leading-relaxed">{article.content}</p>
                     </div>
                   </div>
@@ -149,7 +150,7 @@ export default function Education() {
                   className="bg-white rounded-lg shadow-lg p-4 block hover:shadow-xl transition"
                 >
                   <div className="text-2xl mb-2">🎥</div>
-                  <h3 className="font-semibold text-emerald-800">{video.title}</h3>
+                  <h3 className="font-semibold" style={{ color: '#3f6212' }}>{video.title}</h3>
                   <p className="text-gray-600 text-sm mt-2">Click to watch on YouTube</p>
                 </a>
               ))}
@@ -157,7 +158,7 @@ export default function Education() {
 
             {/* Quick Facts */}
             <div className="mt-8 bg-white rounded-lg shadow-lg p-6">
-              <h3 className="text-lg font-bold text-emerald-800 mb-3">💡 Did You Know?</h3>
+              <h3 className="text-lg font-bold mb-3" style={{ color: '#3f6212' }}>💡 Did You Know?</h3>
               <div className="space-y-2 text-sm text-gray-700">
                 {selectedCategory === 'reproductive' && (
                   <>

@@ -67,14 +67,14 @@ export default function CycleTracker() {
 
   if (initialLoading) {
     return (
-      <div className="min-h-screen bg-emerald-800 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#3f6212' }}>
         <div className="text-white text-xl">Loading cycle tracker...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-emerald-800 p-4">
+    <div className="min-h-screen p-4" style={{ background: '#3f6212' }}>
       <div className="max-w-4xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-8">Menstrual Cycle Tracker 📅</h1>
 
@@ -87,7 +87,7 @@ export default function CycleTracker() {
         <div className="grid md:grid-cols-2 gap-6">
           {/* Input Form */}
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h2 className="text-xl font-bold text-emerald-800 mb-4">Track Your Cycle</h2>
+            <h2 className="text-xl font-bold mb-4" style={{ color: '#3f6212' }}>Track Your Cycle</h2>
             
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
@@ -98,7 +98,10 @@ export default function CycleTracker() {
                   value={formData.lastPeriodDate}
                   onChange={handleChange}
                   required
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-emerald-800"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none"
+                  style={{ borderColor: 'var(--border-color)', '--border-color': '#ccc' }}
+                  onFocus={(e) => e.target.style.borderColor = '#3f6212'}
+                  onBlur={(e) => e.target.style.borderColor = '#ccc'}
                 />
               </div>
 
@@ -111,14 +114,20 @@ export default function CycleTracker() {
                   onChange={handleChange}
                   min="20"
                   max="40"
-                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-emerald-800"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none"
+                  style={{ borderColor: 'var(--border-color)', '--border-color': '#ccc' }}
+                  onFocus={(e) => e.target.style.borderColor = '#3f6212'}
+                  onBlur={(e) => e.target.style.borderColor = '#ccc'}
                 />
               </div>
 
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-emerald-800 text-white font-semibold py-2 rounded-lg hover:bg-emerald-900 transition disabled:bg-gray-400"
+                className="w-full text-white font-semibold py-2 rounded-lg transition disabled:bg-gray-400"
+                style={{ background: loading ? '#ccc' : '#3f6212' }}
+                onMouseEnter={(e) => !loading && (e.target.style.background = '#2d4a0e')}
+                onMouseLeave={(e) => !loading && (e.target.style.background = '#3f6212')}
               >
                 {loading ? 'Updating...' : 'Update Cycle Info'}
               </button>
@@ -128,12 +137,12 @@ export default function CycleTracker() {
           {/* Predictions */}
           {predictions && (
             <div className="bg-white rounded-lg shadow-lg p-6">
-              <h2 className="text-xl font-bold text-emerald-800 mb-4">Predictions</h2>
+              <h2 className="text-xl font-bold mb-4" style={{ color: '#3f6212' }}>Predictions</h2>
               
               <div className="space-y-3">
-                <div className="border-l-4 border-emerald-800 pl-4">
+                <div className="pl-4" style={{ borderLeft: '4px solid #3f6212' }}>
                   <p className="text-gray-600 text-sm">Next Period</p>
-                  <p className="text-lg font-semibold text-emerald-800">{predictions.nextPeriod}</p>
+                  <p className="text-lg font-semibold" style={{ color: '#3f6212' }}>{predictions.nextPeriod}</p>
                 </div>
                 
                 <div className="border-l-4 border-pink-500 pl-4">
@@ -154,19 +163,19 @@ export default function CycleTracker() {
 
         {/* Daily Tips */}
         <div className="mt-8 bg-white rounded-lg shadow-lg p-6">
-          <h2 className="text-2xl font-bold text-emerald-800 mb-6">Self-Care Tips</h2>
+          <h2 className="text-2xl font-bold mb-6" style={{ color: '#3f6212' }}>Self-Care Tips</h2>
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {tips.map((tip, index) => (
-              <div key={index} className="border-2 border-emerald-800 rounded-lg p-4">
-                <h3 className="font-semibold text-emerald-800 mb-2">{tip.title}</h3>
+              <div key={index} className="rounded-lg p-4" style={{ border: '2px solid #3f6212' }}>
+                <h3 className="font-semibold mb-2" style={{ color: '#3f6212' }}>{tip.title}</h3>
                 <p className="text-gray-700 text-sm">{tip.content}</p>
               </div>
             ))}
           </div>
 
           {/* Pain Management */}
-          <div className="mt-6 bg-emerald-50 rounded-lg p-4">
-            <h3 className="font-semibold text-emerald-800 mb-2">💊 Pain Management</h3>
+          <div className="mt-6 rounded-lg p-4" style={{ background: '#f0fde8' }}>
+            <h3 className="font-semibold mb-2" style={{ color: '#3f6212' }}>📊 Pain Management</h3>
             <ul className="text-gray-700 text-sm space-y-2">
               <li>• Use a heating pad on your abdomen or lower back</li>
               <li>• Take over-the-counter pain relief as directed</li>
@@ -179,14 +188,17 @@ export default function CycleTracker() {
 
         {/* Notification */}
         <div className="mt-8 bg-white rounded-lg shadow-lg p-6">
-          <h2 className="text-lg font-bold text-emerald-800 mb-3">📬 Notifications</h2>
+          <h2 className="text-lg font-bold mb-3" style={{ color: '#3f6212' }}>📬 Notifications</h2>
           <button
             onClick={() => {
               if (predictions) {
                 alert(`Reminder: Your next period is expected on ${predictions.nextPeriod}`);
               }
             }}
-            className="bg-emerald-800 text-white px-6 py-2 rounded-lg font-semibold hover:bg-emerald-900 transition"
+            className="text-white px-6 py-2 rounded-lg font-semibold transition"
+            style={{ background: '#3f6212' }}
+            onMouseEnter={(e) => e.target.style.background = '#2d4a0e'}
+            onMouseLeave={(e) => e.target.style.background = '#3f6212'}
           >
             Set Reminder
           </button>

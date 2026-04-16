@@ -61,7 +61,7 @@ export default function Clinics() {
   ];
 
   return (
-    <div className="min-h-screen bg-emerald-800 p-4">
+    <div className="min-h-screen p-4" style={{ background: '#3f6212' }}>
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-8">Clinic Finder 🏥</h1>
 
@@ -70,7 +70,7 @@ export default function Clinics() {
           <div className="flex gap-4">
             <div className="text-4xl">⚠️</div>
             <div>
-              <h2 className="text-xl font-bold text-emerald-800 mb-2">When to Visit a Clinic</h2>
+              <h2 className="text-xl font-bold mb-2" style={{ color: '#3f6212' }}>When to Visit a Clinic</h2>
               <p className="text-gray-700 mb-3">
                 Visit a healthcare facility if you experience:
               </p>
@@ -114,7 +114,7 @@ export default function Clinics() {
                 <p className="text-sm font-semibold text-gray-700 mb-2">Services:</p>
                 <div className="flex flex-wrap gap-2">
                   {clinic.services.slice(0, 2).map((service, i) => (
-                    <span key={i} className="bg-emerald-100 text-emerald-800 text-xs px-2 py-1 rounded">
+                    <span key={i} className="text-xs px-2 py-1 rounded" style={{ background: '#f0fde8', color: '#3f6212' }}>
                       {service}
                     </span>
                   ))}
@@ -126,7 +126,10 @@ export default function Clinics() {
 
               <button
                 onClick={() => setSelectedClinic(clinic)}
-                className="w-full bg-emerald-800 text-white px-4 py-2 rounded-lg font-semibold hover:bg-emerald-900 transition text-sm"
+                className="w-full text-white px-4 py-2 rounded-lg font-semibold transition text-sm"
+                style={{ background: '#3f6212' }}
+                onMouseEnter={(e) => e.target.style.background = '#2d4a0e'}
+                onMouseLeave={(e) => e.target.style.background = '#3f6212'}"
               >
                 View Details
               </button>
@@ -138,7 +141,7 @@ export default function Clinics() {
         {selectedClinic && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
             <div className="bg-white rounded-lg shadow-xl max-w-md w-full max-h-96 overflow-y-auto">
-              <div className="sticky top-0 bg-emerald-800 text-white p-6 flex justify-between items-center">
+              <div className="sticky top-0 text-white p-6 flex justify-between items-center" style={{ background: '#3f6212' }}>
                 <h2 className="text-xl font-bold">{selectedClinic.name}</h2>
                 <button
                   onClick={() => setSelectedClinic(null)}
@@ -197,7 +200,9 @@ export default function Clinics() {
                       setSelectedClinic(null);
                       alert('Directions opened in maps');
                     }}
-                    className="w-full bg-gray-200 text-emerald-800 px-4 py-2 rounded-lg font-semibold hover:bg-gray-300 transition"
+                    className="w-full text-white px-4 py-2 rounded-lg font-semibold transition" style={{ background: '#d9d9d9', color: '#3f6212' }}
+                    onMouseEnter={(e) => e.target.style.background = '#e0e0e0'}
+                    onMouseLeave={(e) => e.target.style.background = '#d9d9d9'}"
                   >
                     Get Directions
                   </button>

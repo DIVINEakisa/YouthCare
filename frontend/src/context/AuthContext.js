@@ -9,10 +9,10 @@ export const AuthProvider = ({ children }) => {
   const [token, setToken] = useState(localStorage.getItem('token'));
 
   useEffect(() => {
-    if (token) {
+    if (token && !user) {
       checkAuth();
     }
-  }, [token]);
+  }, [token, user]);
 
   const checkAuth = async () => {
     try {
@@ -20,8 +20,10 @@ export const AuthProvider = ({ children }) => {
       const response = await authAPI.getMe();
       setUser(response.data);
     } catch (error) {
+      console.error('Auth check failed:', error);
       localStorage.removeItem('token');
       setToken(null);
+      setUser(null);
     } finally {
       setLoading(false);
     }
@@ -31,11 +33,13 @@ export const AuthProvider = ({ children }) => {
     try {
       setLoading(true);
       const response = await authAPI.login({ email, password });
-      localStorage.setItem('token', response.data.token);
-      setToken(response.data.token);
-      setUser(response.data.user);
+      const { token, user } = response.data;
+      localStorage.setItem('token', token);
+      setUser(user);
+      setToken(token);
       return response.data;
     } catch (error) {
+      console.error('Login error:', error);
       throw error;
     } finally {
       setLoading(false);
@@ -46,11 +50,13 @@ export const AuthProvider = ({ children }) => {
     try {
       setLoading(true);
       const response = await authAPI.register({ name, age, gender, email, password });
-      localStorage.setItem('token', response.data.token);
-      setToken(response.data.token);
-      setUser(response.data.user);
+      const { token, user } = response.data;
+      localStorage.setItem('token', token);
+      setUser(user);
+      setToken(token);
       return response.data;
     } catch (error) {
+      console.error('Register error:', error);
       throw error;
     } finally {
       setLoading(false);

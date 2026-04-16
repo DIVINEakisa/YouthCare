@@ -34,12 +34,14 @@ YouthCare+ uses a modern full-stack architecture with clear separation of concer
 ## Frontend Technologies
 
 ### Core Libraries
+
 - **react**: 18.2.0 - UI library
 - **react-router-dom**: 6.11.0 - Client-side routing
 - **axios**: 1.3.0 - HTTP client
 - **tailwindcss**: 3.3.0 - Utility-first CSS
 
 ### Directory Structure
+
 ```
 src/
 ├── components/          # Reusable UI components
@@ -70,11 +72,13 @@ public/
 ```
 
 ### State Management
+
 - **Local Storage**: Stores JWT token
 - **React Context**: Manages authentication state
 - **Component State**: Local component state with useState
 
 ### Authentication Flow
+
 1. User registers/logs in
 2. Backend returns JWT token
 3. Token stored in localStorage
@@ -86,6 +90,7 @@ public/
 ## Backend Technologies
 
 ### Core Libraries
+
 - **express**: 4.18.2 - Web framework
 - **mongoose**: 7.0.0 - MongoDB ODM
 - **bcryptjs**: 2.4.3 - Password hashing
@@ -95,6 +100,7 @@ public/
 - **dotenv**: 16.0.3 - Environment variables
 
 ### Directory Structure
+
 ```
 backend/
 ├── config/
@@ -118,6 +124,7 @@ backend/
 ```
 
 ### Request Flow
+
 1. Client sends HTTP request
 2. CORS middleware validates origin
 3. Route handler matched
@@ -133,6 +140,7 @@ backend/
 ### MongoDB Collections
 
 #### Users Collection
+
 ```javascript
 {
   _id: ObjectId,
@@ -146,9 +154,11 @@ backend/
 ```
 
 Indexes:
+
 - `email`: 1 (unique)
 
 #### Chats Collection
+
 ```javascript
 {
   _id: ObjectId,
@@ -165,9 +175,11 @@ Indexes:
 ```
 
 Indexes:
+
 - `userId`: 1 (for query optimization)
 
 #### CycleTrackers Collection
+
 ```javascript
 {
   _id: ObjectId,
@@ -180,6 +192,7 @@ Indexes:
 ```
 
 Indexes:
+
 - `userId`: 1 (unique, for query optimization)
 
 ---
@@ -187,6 +200,7 @@ Indexes:
 ## Authentication & Security
 
 ### Password Security
+
 ```javascript
 // Hashing
 const salt = await bcrypt.genSalt(10);
@@ -197,32 +211,32 @@ const isValid = await bcrypt.compare(password, hashedPassword);
 ```
 
 ### JWT Token
+
 ```javascript
 // Generation (expires in 7 days)
-const token = jwt.sign(
-  { id: user._id },
-  process.env.JWT_SECRET,
-  { expiresIn: '7d' }
-);
+const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+  expiresIn: "7d",
+});
 
 // Verification (on protected routes)
 const decoded = jwt.verify(token, process.env.JWT_SECRET);
 ```
 
 ### Protected Routes
+
 ```javascript
 // Middleware adds userId to request
 const auth = (req, res, next) => {
-  const token = req.header('Authorization')?.replace('Bearer ', '');
-  if (!token) return res.status(401).json({ message: 'No token' });
-  
+  const token = req.header("Authorization")?.replace("Bearer ", "");
+  if (!token) return res.status(401).json({ message: "No token" });
+
   const decoded = jwt.verify(token, process.env.JWT_SECRET);
   req.userId = decoded.id;
   next();
 };
 
 // Used in routes
-router.get('/protected', auth, controller);
+router.get("/protected", auth, controller);
 ```
 
 ---
@@ -230,29 +244,32 @@ router.get('/protected', auth, controller);
 ## API Integration
 
 ### OpenAI API
+
 ```javascript
 // Chat completion request
 const response = await axios.post(
-  'https://api.openai.com/v1/chat/completions',
+  "https://api.openai.com/v1/chat/completions",
   {
-    model: 'gpt-3.5-turbo',
+    model: "gpt-3.5-turbo",
     messages: [
-      { role: 'system', content: 'You are a health advisor...' },
-      { role: 'user', content: userMessage }
+      { role: "system", content: "You are a health advisor..." },
+      { role: "user", content: userMessage },
     ],
-    max_tokens: 150
+    max_tokens: 150,
   },
   {
     headers: {
-      'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-      'Content-Type': 'application/json'
-    }
-  }
+      Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+  },
 );
 ```
 
 ### Fallback System
+
 If OpenAI API fails or no key provided, uses mock responses:
+
 ```javascript
 const getMockAIResponse = (message) => {
   // Returns pre-written health advice
@@ -265,9 +282,10 @@ const getMockAIResponse = (message) => {
 ## Frontend Component Examples
 
 ### Functional Component with Hooks
+
 ```jsx
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function ComponentName() {
   const [state, setState] = useState(null);
@@ -289,24 +307,21 @@ export default function ComponentName() {
     }
   };
 
-  return (
-    <div>
-      {/* JSX content */}
-    </div>
-  );
+  return <div>{/* JSX content */}</div>;
 }
 ```
 
 ### API Call Pattern
+
 ```jsx
-import { chatAPI } from '../utils/api';
+import { chatAPI } from "../utils/api";
 
 const sendMessage = async () => {
   try {
     const response = await chatAPI.sendMessage(message);
     setMessages(response.data.chatHistory);
   } catch (error) {
-    console.error('Error:', error);
+    console.error("Error:", error);
   }
 };
 ```
@@ -316,24 +331,25 @@ const sendMessage = async () => {
 ## Backend Controller Examples
 
 ### Async Controller with Error Handling
+
 ```javascript
 const controller = async (req, res) => {
   try {
     // Validate input
     const { field } = req.body;
     if (!field) {
-      return res.status(400).json({ message: 'Field required' });
+      return res.status(400).json({ message: "Field required" });
     }
 
     // Process request
     const result = await Model.findById(req.userId);
-    
+
     // Return success
     res.json({ data: result });
   } catch (error) {
-    res.status(500).json({ 
-      message: 'Server error', 
-      error: error.message 
+    res.status(500).json({
+      message: "Server error",
+      error: error.message,
     });
   }
 };
@@ -344,6 +360,7 @@ const controller = async (req, res) => {
 ## CSS & Styling
 
 ### Tailwind CSS Configuration
+
 ```javascript
 theme: {
   extend: {
@@ -361,6 +378,7 @@ theme: {
 ```
 
 ### Utility Classes
+
 ```jsx
 <div className="bg-emerald-800 p-4 rounded-lg shadow-lg">
   <h1 className="text-3xl font-bold text-white">Title</h1>
@@ -368,6 +386,7 @@ theme: {
 ```
 
 ### Responsive Design
+
 ```jsx
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
   {/* Mobile: 1 col, Tablet: 2 cols, Desktop: 3 cols */}
@@ -379,6 +398,7 @@ theme: {
 ## Environment Variables
 
 ### Backend (.env)
+
 ```
 MONGODB_URI=mongodb://localhost:27017/youthcare
 PORT=5000
@@ -388,6 +408,7 @@ NODE_ENV=development
 ```
 
 ### Frontend (.env)
+
 ```
 REACT_APP_API_URL=http://localhost:5000/api
 ```
@@ -397,17 +418,20 @@ REACT_APP_API_URL=http://localhost:5000/api
 ## Performance Considerations
 
 ### Database Optimization
+
 - Indexes on frequently queried fields
 - Use lean() for read-only queries
 - Pagination for large datasets
 
 ### Frontend Optimization
+
 - Code splitting with React.lazy()
 - Image optimization
 - Caching with localStorage
 - Minimize API calls
 
 ### Backend Optimization
+
 - Response compression
 - Connection pooling
 - Query optimization
@@ -418,24 +442,26 @@ REACT_APP_API_URL=http://localhost:5000/api
 ## Error Handling
 
 ### Frontend
+
 ```javascript
 try {
-  const response = await api.post('/endpoint', data);
+  const response = await api.post("/endpoint", data);
   // Success
 } catch (error) {
-  const message = error.response?.data?.message || 'Error occurred';
+  const message = error.response?.data?.message || "Error occurred";
   setError(message);
 }
 ```
 
 ### Backend
+
 ```javascript
 try {
   const result = await Model.find();
   res.json(result);
 } catch (error) {
-  console.error('Database error:', error);
-  res.status(500).json({ message: 'Server error' });
+  console.error("Database error:", error);
+  res.status(500).json({ message: "Server error" });
 }
 ```
 
@@ -444,6 +470,7 @@ try {
 ## Testing Strategy
 
 ### Manual Testing Checklist
+
 - [ ] Register new user
 - [ ] Login with credentials
 - [ ] Navigate all pages
@@ -454,6 +481,7 @@ try {
 - [ ] Verify error messages
 
 ### API Testing
+
 ```bash
 # Test auth
 curl -X POST http://localhost:5000/api/auth/login \
@@ -485,18 +513,21 @@ curl -X GET http://localhost:5000/api/chat/history \
 ## Future Enhancements
 
 ### Short-term
+
 - User profile page
 - Password reset
 - Email verification
 - Rate limiting
 
 ### Medium-term
+
 - Real SMS integration
 - Video streaming
 - Appointment booking
 - Provider integration
 
 ### Long-term
+
 - Mobile app (React Native)
 - Community features
 - AI model training
@@ -509,6 +540,7 @@ curl -X GET http://localhost:5000/api/chat/history \
 ### Common Issues
 
 **Port Already in Use**
+
 ```bash
 # Find process
 netstat -ano | findstr :5000
@@ -517,17 +549,20 @@ taskkill /PID <PID> /F
 ```
 
 **MongoDB Connection Failed**
+
 - Check MongoDB running: `mongosh`
 - Verify connection string
 - Check database exists
 
 **API Not Responding**
+
 - Check backend is running
 - Verify port 5000 accessible
 - Check CORS configuration
 - Review server logs
 
 **Frontend Errors**
+
 - Clear browser cache
 - Check browser console
 - Verify API URL in .env
@@ -538,6 +573,7 @@ taskkill /PID <PID> /F
 ## Code Style Guidelines
 
 ### JavaScript/React
+
 - Use arrow functions
 - Use const by default
 - Destructure imports/props
@@ -545,11 +581,13 @@ taskkill /PID <PID> /F
 - Comment complex logic
 
 ### File Naming
+
 - PascalCase for components: `MyComponent.js`
 - camelCase for utilities: `myUtility.js`
 - kebab-case for CSS: `my-style.css`
 
 ### Git Commits
+
 - Descriptive messages
 - Reference issues
 - Keep commits atomic

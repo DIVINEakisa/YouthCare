@@ -29,7 +29,9 @@ export default function Login() {
       await login(formData.email, formData.password);
       navigate('/dashboard');
     } catch (err) {
-      setError(err.response?.data?.message || 'Login failed');
+      const errorMsg = err.response?.data?.message || err.message || 'Login failed. Please check your email and password.';
+      console.error('Login error:', err);
+      setError(errorMsg);
     } finally {
       setLoading(false);
     }

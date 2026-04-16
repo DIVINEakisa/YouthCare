@@ -59,23 +59,23 @@ export default function Chat() {
 
   if (initialLoading) {
     return (
-      <div className="min-h-screen bg-emerald-800 flex items-center justify-center">
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#3f6212' }}>
         <div className="text-white text-xl">Loading chat...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-emerald-800 flex flex-col">
-      <div className="bg-emerald-900 text-white p-4 shadow-lg">
+    <div className="min-h-screen flex flex-col" style={{ background: '#3f6212' }}>
+      <div className="text-white p-4 shadow-lg" style={{ background: '#2d4a0e' }}>
         <h1 className="text-2xl font-bold">AI Health Advisor 💬</h1>
-        <p className="text-emerald-100 text-sm">Ask questions about your health and wellness</p>
+        <p className="text-sm" style={{ color: '#f0fde8' }}>Ask questions about your health and wellness</p>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.length === 0 && (
           <div className="flex items-center justify-center h-full">
-            <div className="text-center text-emerald-100">
+            <div className="text-center" style={{ color: '#f0fde8' }}>
               <div className="text-6xl mb-4">💬</div>
               <p className="text-lg mb-2">Welcome to YouthCare+ Chat!</p>
               <p className="text-sm max-w-md">Ask me anything about reproductive health, mental wellness, or general health questions. I'm here to help!</p>
@@ -91,9 +91,10 @@ export default function Chat() {
             <div
               className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
                 msg.role === 'user'
-                  ? 'bg-white text-emerald-800'
-                  : 'bg-emerald-100 text-emerald-900'
+                  ? 'bg-white'
+                  : 'text-white'
               }`}
+              style={msg.role === 'user' ? { color: '#3f6212' } : { background: '#2d4a0e' }}
             >
               <p className="text-sm">{msg.content}</p>
             </div>
@@ -102,7 +103,7 @@ export default function Chat() {
 
         {loading && (
           <div className="flex justify-start">
-            <div className="bg-emerald-100 text-emerald-900 px-4 py-2 rounded-lg">
+            <div className="px-4 py-2 rounded-lg text-white" style={{ background: '#2d4a0e' }}>
               <p className="text-sm">Typing...</p>
             </div>
           </div>
@@ -118,13 +119,19 @@ export default function Chat() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder="Ask a question..."
-            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-emerald-800"
+            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none"
+            style={{ borderColor: 'var(--border-color)', '--border-color': '#ccc' }}
+            onFocus={(e) => e.target.style.borderColor = '#3f6212'}
+            onBlur={(e) => e.target.style.borderColor = '#ccc'}"
             disabled={loading}
           />
           <button
             type="submit"
             disabled={loading || !input.trim()}
-            className="bg-emerald-800 text-white px-6 py-2 rounded-lg font-semibold hover:bg-emerald-900 transition disabled:bg-gray-400"
+            className="text-white px-6 py-2 rounded-lg font-semibold transition disabled:bg-gray-400"
+            style={{ background: loading || !input.trim() ? '#ccc' : '#3f6212' }}
+            onMouseEnter={(e) => !loading && input.trim() && (e.target.style.background = '#2d4a0e')}
+            onMouseLeave={(e) => !loading && input.trim() && (e.target.style.background = '#3f6212')}
           >
             Send
           </button>

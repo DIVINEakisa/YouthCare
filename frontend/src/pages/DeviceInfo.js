@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function DeviceInfo() {
   return (
-    <div className="min-h-screen bg-emerald-800 p-4">
+    <div className="min-h-screen p-4" style={{ background: '#3f6212' }}>
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-8">IoT Menstrual Pain Device ⚙️</h1>
 
@@ -10,7 +10,7 @@ export default function DeviceInfo() {
         <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
           <div className="grid md:grid-cols-2 gap-8 items-center">
             <div>
-              <h2 className="text-3xl font-bold text-emerald-800 mb-4">YouthCare+ Pain Relief Wearable</h2>
+              <h2 className="text-3xl font-bold mb-4" style={{ color: '#3f6212' }}>YouthCare+ Pain Relief Wearable</h2>
               <p className="text-gray-700 mb-4">
                 The YouthCare+ Pain Relief Device is a wearable technology designed to provide non-invasive pain relief for menstrual cramps and other period-related discomfort.
               </p>
@@ -18,9 +18,9 @@ export default function DeviceInfo() {
                 This innovative device is designed to be affordable, accessible, and easy to use for youth in Rwanda and across Africa.
               </p>
             </div>
-            <div className="bg-emerald-100 rounded-lg p-8 text-center">
+            <div className="rounded-lg p-8 text-center" style={{ background: '#f0fde8' }}>
               <div className="text-8xl mb-4">📱⚡</div>
-              <p className="text-emerald-800 font-semibold">Coming Soon</p>
+              <p className="font-semibold" style={{ color: '#3f6212' }}>Coming Soon</p>
             </div>
           </div>
         </div>
@@ -28,10 +28,10 @@ export default function DeviceInfo() {
         {/* Features */}
         <div className="grid md:grid-cols-2 gap-6 mb-8">
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h3 className="text-2xl font-bold text-emerald-800 mb-4">✨ Key Features</h3>
+            <h3 className="text-2xl font-bold mb-4" style={{ color: '#3f6212' }}>✨ Key Features</h3>
             <ul className="space-y-3 text-gray-700">
               <li className="flex items-start gap-3">
-                <span className="text-emerald-800 font-bold text-xl">•</span>
+                <span className="font-bold text-xl" style={{ color: '#3f6212' }}>•</span>
                 <div>
                   <p className="font-semibold">Smart Heat Therapy</p>
                   <p className="text-sm text-gray-600">Adjustable warmth for effective pain relief</p>
@@ -62,13 +62,13 @@ export default function DeviceInfo() {
           </div>
 
           <div className="bg-white rounded-lg shadow-lg p-6">
-            <h3 className="text-2xl font-bold text-emerald-800 mb-4">💰 Affordability</h3>
-            <div className="bg-emerald-50 rounded-lg p-4 mb-4">
-              <p className="text-2xl font-bold text-emerald-800">Low Cost</p>
+            <h3 className="text-2xl font-bold mb-4" style={{ color: '#3f6212' }}>💰 Affordability</h3>
+            <div className="rounded-lg p-4 mb-4" style={{ background: '#f0fde8' }}>
+              <p className="text-2xl font-bold" style={{ color: '#3f6212' }}>Low Cost</p>
               <p className="text-gray-700 mt-2">Designed to be affordable for all youth</p>
             </div>
             
-            <h4 className="font-semibold text-emerald-800 mb-3">Why It Matters:</h4>
+            <h4 className="font-semibold mb-3" style={{ color: '#3f6212' }}>Why It Matters:</h4>
             <ul className="space-y-2 text-sm text-gray-700">
               <li>✓ Reduces need for medication</li>
               <li>✓ Reusable and sustainable</li>
@@ -82,26 +82,26 @@ export default function DeviceInfo() {
 
         {/* How It Works */}
         <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-          <h2 className="text-2xl font-bold text-emerald-800 mb-6">How It Works</h2>
+          <h2 className="text-2xl font-bold mb-6" style={{ color: '#3f6212' }}>How It Works</h2>
           <div className="grid md:grid-cols-4 gap-4">
-            <div className="text-center p-4 border-2 border-emerald-800 rounded-lg">
+            <div className="text-center p-4 rounded-lg" style={{ border: '2px solid #3f6212' }}>
               <div className="text-3xl mb-2">1️⃣</div>
-              <h3 className="font-bold text-emerald-800 mb-2">Position</h3>
+              <h3 className="font-bold mb-2" style={{ color: '#3f6212' }}>Position</h3>
               <p className="text-gray-700 text-sm">Place device on lower abdomen</p>
             </div>
-            <div className="text-center p-4 border-2 border-emerald-800 rounded-lg">
+            <div className="text-center p-4 rounded-lg" style={{ border: '2px solid #3f6212' }}>
               <div className="text-3xl mb-2">2️⃣</div>
-              <h3 className="font-bold text-emerald-800 mb-2">Activate</h3>
+              <h3 className="font-bold mb-2" style={{ color: '#3f6212' }}>Activate</h3>
               <p className="text-gray-700 text-sm">Turn on and select comfort level</p>
             </div>
-            <div className="text-center p-4 border-2 border-emerald-800 rounded-lg">
+            <div className="text-center p-4 rounded-lg" style={{ border: '2px solid #3f6212' }}>
               <div className="text-3xl mb-2">3️⃣</div>
-              <h3 className="font-bold text-emerald-800 mb-2">Relax</h3>
+              <h3 className="font-bold mb-2" style={{ color: '#3f6212' }}>Relax</h3>
               <p className="text-gray-700 text-sm">Enjoy warming and vibration therapy</p>
             </div>
-            <div className="text-center p-4 border-2 border-emerald-800 rounded-lg">
+            <div className="text-center p-4 rounded-lg" style={{ border: '2px solid #3f6212' }}>
               <div className="text-3xl mb-2">4️⃣</div>
-              <h3 className="font-bold text-emerald-800 mb-2">Relief</h3>
+              <h3 className="font-bold mb-2" style={{ color: '#3f6212' }}>Relief</h3>
               <p className="text-gray-700 text-sm">Experience pain relief in 15-30 min</p>
             </div>
           </div>
