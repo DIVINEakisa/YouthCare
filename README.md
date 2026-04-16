@@ -72,18 +72,21 @@ YouthCare/
 ## Features
 
 ### 1. Authentication System
+
 - User registration with name, age, gender, email, and password
 - User login with JWT authentication
 - Secure password hashing with bcryptjs
 - Session management
 
 ### 2. Dashboard
+
 - Welcome message with user name
 - Navigation to all features
 - Gender-specific features (Cycle Tracker for female users)
 - USSD and Call Support information
 
 ### 3. AI Chatbot
+
 - Chat interface for health questions
 - Integration with OpenAI API (with mock responses as fallback)
 - Chat history storage
@@ -91,6 +94,7 @@ YouthCare/
 - Recommendations for articles and resources
 
 ### 4. Menstrual Cycle Tracker
+
 - Cycle prediction and calculation
 - Ovulation window detection
 - Fertility days prediction
@@ -99,6 +103,7 @@ YouthCare/
 - Reminder notifications
 
 ### 5. Educational Content
+
 - Multiple categories: Reproductive Health, Mental Health, Youth Education
 - Articles with icons and descriptions
 - YouTube video links
@@ -106,6 +111,7 @@ YouthCare/
 - Mobile-responsive cards
 
 ### 6. Mental Health Support
+
 - Mood tracker with emoji selection
 - Context-specific tips based on mood
 - Relaxation techniques
@@ -114,6 +120,7 @@ YouthCare/
 - Crisis support hotline
 
 ### 7. Clinic Finder
+
 - List of nearby clinics with mock data
 - Clinic details: location, contact, hours, services
 - Rating system
@@ -121,12 +128,14 @@ YouthCare/
 - Emergency contact information
 
 ### 8. Youth Centers (Maison des Jeunes)
+
 - List of youth centers in Rwanda
 - Activities offered at each center
 - Contact information and hours
 - Information about getting involved
 
 ### 9. IoT Menstrual Pain Device
+
 - Informational page about the device
 - Features and benefits
 - Technical specifications
@@ -134,6 +143,7 @@ YouthCare/
 - Pre-order information
 
 ### 10. Accessibility Features
+
 - Large, readable text options
 - Simple language throughout
 - High contrast colors (emerald-800 background, white cards)
@@ -144,6 +154,7 @@ YouthCare/
 ## Setup Instructions
 
 ### Prerequisites
+
 - Node.js (v14 or higher)
 - MongoDB (local or cloud instance)
 - npm or yarn package manager
@@ -151,21 +162,25 @@ YouthCare/
 ### Backend Setup
 
 1. Navigate to the backend directory:
+
 ```bash
 cd backend
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Create a `.env` file based on `.env.example`:
+
 ```bash
 cp .env.example .env
 ```
 
 4. Update the `.env` file with your configuration:
+
 ```
 MONGODB_URI=mongodb://localhost:27017/youthcare
 PORT=5000
@@ -175,6 +190,7 @@ NODE_ENV=development
 ```
 
 5. Start the backend server:
+
 ```bash
 npm start
 # or for development with auto-reload
@@ -186,26 +202,31 @@ The backend will run on `http://localhost:5000`
 ### Frontend Setup
 
 1. Navigate to the frontend directory:
+
 ```bash
 cd frontend
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Create a `.env` file based on `.env.example`:
+
 ```bash
 cp .env.example .env
 ```
 
 4. Update the `.env` file:
+
 ```
 REACT_APP_API_URL=http://localhost:5000/api
 ```
 
 5. Start the frontend development server:
+
 ```bash
 npm start
 ```
@@ -215,15 +236,18 @@ The frontend will open at `http://localhost:3000`
 ## API Endpoints
 
 ### Authentication
+
 - `POST /api/auth/register` - User registration
 - `POST /api/auth/login` - User login
 - `GET /api/auth/me` - Get current user (protected)
 
 ### Chat
+
 - `POST /api/chat/send` - Send message to AI (protected)
 - `GET /api/chat/history` - Get chat history (protected)
 
 ### Cycle Tracker
+
 - `POST /api/cycle-tracker/update` - Update cycle information (protected)
 - `GET /api/cycle-tracker/get` - Get cycle predictions (protected)
 
@@ -251,7 +275,7 @@ The frontend will open at `http://localhost:3000`
 
 - **Main Color**: Emerald-800 (#065f46)
 - **Secondary Colors**: White (cards), Emerald shades for accents
-- **Typography**: 
+- **Typography**:
   - Main font: Inter
   - Headings: Poppins
 - **Layout**: Mobile-first, responsive design
@@ -318,6 +342,7 @@ The frontend will open at `http://localhost:3000`
 ## Database Schema
 
 ### Users Collection
+
 ```javascript
 {
   _id: ObjectId,
@@ -331,6 +356,7 @@ The frontend will open at `http://localhost:3000`
 ```
 
 ### Chats Collection
+
 ```javascript
 {
   _id: ObjectId,
@@ -347,6 +373,7 @@ The frontend will open at `http://localhost:3000`
 ```
 
 ### CycleTracker Collection
+
 ```javascript
 {
   _id: ObjectId,
@@ -372,17 +399,20 @@ To test the application:
 ## Troubleshooting
 
 ### Backend Connection Issues
+
 - Ensure MongoDB is running
 - Check if port 5000 is not in use
 - Verify `.env` file configuration
 
 ### Frontend Issues
+
 - Clear browser cache
 - Restart development server
 - Check if backend is running
 - Verify `.env` file has correct API URL
 
 ### AI Chatbot Not Working
+
 - Check if OPENAI_API_KEY is set
 - Mock responses will work if API key is unavailable
 - Check API key validity
@@ -390,6 +420,7 @@ To test the application:
 ## Support
 
 For issues or questions:
+
 1. Check error messages in browser console and server logs
 2. Verify all environment variables are set correctly
 3. Ensure all dependencies are installed
