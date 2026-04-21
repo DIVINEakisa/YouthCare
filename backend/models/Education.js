@@ -1,10 +1,10 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const educationSchema = new mongoose.Schema(
   {
     category: {
       type: String,
-      enum: ['reproductive', 'mental', 'youth', 'nutrition', 'safety'],
+      enum: ["reproductive", "mental", "youth", "nutrition", "safety"],
       required: true,
     },
     title: {
@@ -39,12 +39,12 @@ const educationSchema = new mongoose.Schema(
     },
     icon: {
       type: String,
-      default: '📚',
+      default: "📚",
     },
     type: {
       type: String,
-      enum: ['article', 'video', 'resource'],
-      default: 'article',
+      enum: ["article", "video", "resource"],
+      default: "article",
     },
     videoUrl: {
       type: String,
@@ -52,13 +52,13 @@ const educationSchema = new mongoose.Schema(
     },
     targetAudience: {
       type: [String],
-      enum: ['all', 'female', 'male'],
-      default: ['all'],
+      enum: ["all", "female", "male"],
+      default: ["all"],
     },
     ageGroup: {
       type: String,
-      enum: ['10-13', '13-16', '16-19', 'all'],
-      default: 'all',
+      enum: ["10-13", "13-16", "16-19", "all"],
+      default: "all",
     },
     isActive: {
       type: Boolean,
@@ -66,10 +66,10 @@ const educationSchema = new mongoose.Schema(
     },
     source: {
       type: String,
-      default: 'YouthCare+',
+      default: "YouthCare+",
     },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
-module.exports = mongoose.model('Education', educationSchema);
+module.exports = mongoose.model("Education", educationSchema);

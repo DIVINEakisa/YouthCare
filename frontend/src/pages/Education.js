@@ -1,26 +1,26 @@
-import React, { useState, useEffect } from 'react';
-import { apiClient } from '../utils/api';
+import React, { useState, useEffect } from "react";
+import { apiClient } from "../utils/api";
 
 export default function Education() {
-  const [selectedCategory, setSelectedCategory] = useState('reproductive');
-  const [language, setLanguage] = useState('en');
-  const [gender, setGender] = useState('all');
-  const [ageGroup, setAgeGroup] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState("reproductive");
+  const [language, setLanguage] = useState("en");
+  const [gender, setGender] = useState("all");
+  const [ageGroup, setAgeGroup] = useState("all");
   const [content, setContent] = useState(null);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
 
   // Fetch categories on component mount
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await apiClient.get('/api/education/categories');
+        const response = await apiClient.get("/api/education/categories");
         if (response.data.success) {
           setCategories(response.data.categories);
         }
       } catch (err) {
-        console.error('Error fetching categories:', err);
+        console.error("Error fetching categories:", err);
       }
     };
 
@@ -31,7 +31,7 @@ export default function Education() {
   useEffect(() => {
     const fetchContent = async () => {
       setLoading(true);
-      setError('');
+      setError("");
 
       try {
         const response = await apiClient.get(
@@ -42,17 +42,17 @@ export default function Education() {
               gender,
               ageGroup,
             },
-          }
+          },
         );
 
         if (response.data.success) {
           setContent(response.data.data);
         } else {
-          setError('Failed to load content');
+          setError("Failed to load content");
         }
       } catch (err) {
-        console.error('Error fetching content:', err);
-        setError('Failed to load educational content');
+        console.error("Error fetching content:", err);
+        setError("Failed to load educational content");
       } finally {
         setLoading(false);
       }
@@ -63,37 +63,37 @@ export default function Education() {
 
   const categoryTitles = {
     reproductive: {
-      en: 'Reproductive Health',
-      rw: 'Ubuzima bw\'Ubudade',
+      en: "Reproductive Health",
+      rw: "Ubuzima bw'Ubudade",
     },
     mental: {
-      en: 'Mental Health',
-      rw: 'Ubwenge',
+      en: "Mental Health",
+      rw: "Ubwenge",
     },
     youth: {
-      en: 'Youth Education',
-      rw: 'Ubwenge bw\'Abagore',
+      en: "Youth Education",
+      rw: "Ubwenge bw'Abagore",
     },
     nutrition: {
-      en: 'Nutrition',
-      rw: 'Imvikire',
+      en: "Nutrition",
+      rw: "Imvikire",
     },
     safety: {
-      en: 'Personal Safety',
-      rw: 'Ubwishingizi bwawe',
+      en: "Personal Safety",
+      rw: "Ubwishingizi bwawe",
     },
   };
 
   const categoryEmojis = {
-    reproductive: '🏥',
-    mental: '🧠',
-    youth: '👥',
-    nutrition: '🥗',
-    safety: '🛡️',
+    reproductive: "🏥",
+    mental: "🧠",
+    youth: "👥",
+    nutrition: "🥗",
+    safety: "🛡️",
   };
 
   return (
-    <div className="min-h-screen p-4" style={{ background: '#3f6212' }}>
+    <div className="min-h-screen p-4" style={{ background: "#3f6212" }}>
       <div className="max-w-6xl mx-auto">
         <h1 className="text-3xl font-bold text-white mb-8">Learn & Grow 📚</h1>
 
@@ -102,14 +102,17 @@ export default function Education() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
             {/* Language Selector */}
             <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: '#3f6212' }}>
+              <label
+                className="block text-sm font-semibold mb-2"
+                style={{ color: "#3f6212" }}
+              >
                 Language
               </label>
               <select
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none"
-                style={{ borderColor: '#3f6212' }}
+                style={{ borderColor: "#3f6212" }}
               >
                 <option value="en">English</option>
                 <option value="rw">Kinyarwanda</option>
@@ -118,14 +121,17 @@ export default function Education() {
 
             {/* Gender Filter */}
             <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: '#3f6212' }}>
+              <label
+                className="block text-sm font-semibold mb-2"
+                style={{ color: "#3f6212" }}
+              >
                 Content For
               </label>
               <select
                 value={gender}
                 onChange={(e) => setGender(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none"
-                style={{ borderColor: '#3f6212' }}
+                style={{ borderColor: "#3f6212" }}
               >
                 <option value="all">Everyone</option>
                 <option value="female">Girls</option>
@@ -135,14 +141,17 @@ export default function Education() {
 
             {/* Age Group Filter */}
             <div>
-              <label className="block text-sm font-semibold mb-2" style={{ color: '#3f6212' }}>
+              <label
+                className="block text-sm font-semibold mb-2"
+                style={{ color: "#3f6212" }}
+              >
                 Age Group
               </label>
               <select
                 value={ageGroup}
                 onChange={(e) => setAgeGroup(e.target.value)}
                 className="w-full p-2 border border-gray-300 rounded-lg focus:outline-none"
-                style={{ borderColor: '#3f6212' }}
+                style={{ borderColor: "#3f6212" }}
               >
                 <option value="all">All Ages</option>
                 <option value="10-13">10-13 years</option>
@@ -161,17 +170,17 @@ export default function Education() {
               onClick={() => setSelectedCategory(category)}
               className={`px-6 py-3 rounded-lg font-semibold transition flex items-center gap-2 ${
                 selectedCategory === category
-                  ? 'bg-white text-white'
-                  : 'text-white hover:bg-opacity-80'
+                  ? "bg-white text-white"
+                  : "text-white hover:bg-opacity-80"
               }`}
               style={
                 selectedCategory === category
-                  ? { background: '#fff', color: '#3f6212' }
-                  : { background: '#2d4a0e' }
+                  ? { background: "#fff", color: "#3f6212" }
+                  : { background: "#2d4a0e" }
               }
             >
-              <span>{categoryEmojis[category] || '📖'}</span>
-              {categoryTitles[category]?.[language] || 'Category'}
+              <span>{categoryEmojis[category] || "📖"}</span>
+              {categoryTitles[category]?.[language] || "Category"}
             </button>
           ))}
         </div>
@@ -179,7 +188,9 @@ export default function Education() {
         {/* Loading State */}
         {loading && (
           <div className="text-center py-12">
-            <div className="text-white text-xl">Loading educational content...</div>
+            <div className="text-white text-xl">
+              Loading educational content...
+            </div>
           </div>
         )}
 
@@ -196,18 +207,21 @@ export default function Education() {
             {/* Articles */}
             <div className="lg:col-span-2">
               <h2 className="text-2xl font-bold text-white mb-6">
-                {language === 'rw' ? 'Ibitanzu' : 'Articles'}
+                {language === "rw" ? "Ibitanzu" : "Articles"}
               </h2>
               {content.articles && content.articles.length > 0 ? (
                 <div className="space-y-4">
                   {content.articles.map((article, index) => (
-                    <div key={index} className="bg-white rounded-lg shadow-lg p-6">
+                    <div
+                      key={index}
+                      className="bg-white rounded-lg shadow-lg p-6"
+                    >
                       <div className="flex items-start gap-4">
                         <div className="text-3xl">{article.icon}</div>
                         <div className="flex-1">
                           <h3
                             className="text-lg font-bold mb-2"
-                            style={{ color: '#3f6212' }}
+                            style={{ color: "#3f6212" }}
                           >
                             {article.title}
                           </h3>
@@ -218,7 +232,8 @@ export default function Education() {
                             {article.content}
                           </p>
                           <p className="text-xs text-gray-500 mt-3">
-                            {language === 'rw' ? 'Inzira:' : 'Source:'} {article.source}
+                            {language === "rw" ? "Inzira:" : "Source:"}{" "}
+                            {article.source}
                           </p>
                         </div>
                       </div>
@@ -227,9 +242,9 @@ export default function Education() {
                 </div>
               ) : (
                 <div className="bg-white rounded-lg shadow-lg p-6 text-center text-gray-500">
-                  {language === 'rw'
-                    ? 'Nta bihindu bikeneye.'
-                    : 'No articles available for this selection.'}
+                  {language === "rw"
+                    ? "Nta bihindu bikeneye."
+                    : "No articles available for this selection."}
                 </div>
               )}
             </div>
@@ -237,12 +252,15 @@ export default function Education() {
             {/* Videos */}
             <div>
               <h2 className="text-2xl font-bold text-white mb-6">
-                {language === 'rw' ? 'Inzira' : 'Videos'}
+                {language === "rw" ? "Inzira" : "Videos"}
               </h2>
               {content.videos && content.videos.length > 0 ? (
                 <div className="space-y-4">
                   {content.videos.map((video, index) => (
-                    <div key={index} className="bg-white rounded-lg shadow-lg overflow-hidden">
+                    <div
+                      key={index}
+                      className="bg-white rounded-lg shadow-lg overflow-hidden"
+                    >
                       {video.videoUrl && (
                         <iframe
                           width="100%"
@@ -256,11 +274,15 @@ export default function Education() {
                         ></iframe>
                       )}
                       <div className="p-4">
-                        <h3 className="text-sm font-bold" style={{ color: '#3f6212' }}>
+                        <h3
+                          className="text-sm font-bold"
+                          style={{ color: "#3f6212" }}
+                        >
                           {video.title}
                         </h3>
                         <p className="text-xs text-gray-500 mt-2">
-                          {language === 'rw' ? 'Inzira:' : 'Source:'} {video.source}
+                          {language === "rw" ? "Inzira:" : "Source:"}{" "}
+                          {video.source}
                         </p>
                       </div>
                     </div>
@@ -268,9 +290,9 @@ export default function Education() {
                 </div>
               ) : (
                 <div className="bg-white rounded-lg shadow-lg p-6 text-center text-gray-500">
-                  {language === 'rw'
-                    ? 'Nta inzira bikeneye.'
-                    : 'No videos available for this selection.'}
+                  {language === "rw"
+                    ? "Nta inzira bikeneye."
+                    : "No videos available for this selection."}
                 </div>
               )}
             </div>
@@ -278,30 +300,35 @@ export default function Education() {
         )}
 
         {/* Resources */}
-        {!loading && content && content.resources && content.resources.length > 0 && (
-          <div className="mt-8">
-            <h2 className="text-2xl font-bold text-white mb-6">
-              {language === 'rw' ? 'Ibikoresho' : 'Resources'}
-            </h2>
-            <div className="grid md:grid-cols-2 gap-4">
-              {content.resources.map((resource, index) => (
-                <a
-                  key={index}
-                  href={resource.videoUrl || '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="bg-white rounded-lg shadow-lg p-4 hover:shadow-xl transition block"
-                >
-                  <div className="text-2xl mb-2">{resource.icon}</div>
-                  <h3 className="font-bold" style={{ color: '#3f6212' }}>
-                    {resource.title}
-                  </h3>
-                  <p className="text-sm text-gray-600 mt-2">{resource.description}</p>
-                </a>
-              ))}
+        {!loading &&
+          content &&
+          content.resources &&
+          content.resources.length > 0 && (
+            <div className="mt-8">
+              <h2 className="text-2xl font-bold text-white mb-6">
+                {language === "rw" ? "Ibikoresho" : "Resources"}
+              </h2>
+              <div className="grid md:grid-cols-2 gap-4">
+                {content.resources.map((resource, index) => (
+                  <a
+                    key={index}
+                    href={resource.videoUrl || "#"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-white rounded-lg shadow-lg p-4 hover:shadow-xl transition block"
+                  >
+                    <div className="text-2xl mb-2">{resource.icon}</div>
+                    <h3 className="font-bold" style={{ color: "#3f6212" }}>
+                      {resource.title}
+                    </h3>
+                    <p className="text-sm text-gray-600 mt-2">
+                      {resource.description}
+                    </p>
+                  </a>
+                ))}
+              </div>
             </div>
-          </div>
-        )}
+          )}
       </div>
     </div>
   );

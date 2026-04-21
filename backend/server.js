@@ -1,11 +1,11 @@
-require('dotenv').config();
-const express = require('express');
-const cors = require('cors');
-const connectDB = require('./config/db');
-const authRoutes = require('./routes/auth');
-const chatRoutes = require('./routes/chat');
-const cycleTrackerRoutes = require('./routes/cycleTracker');
-const educationRoutes = require('./routes/education');
+require("dotenv").config();
+const express = require("express");
+const cors = require("cors");
+const connectDB = require("./config/db");
+const authRoutes = require("./routes/auth");
+const chatRoutes = require("./routes/chat");
+const cycleTrackerRoutes = require("./routes/cycleTracker");
+const educationRoutes = require("./routes/education");
 
 const app = express();
 
@@ -17,14 +17,14 @@ app.use(express.json());
 connectDB();
 
 // Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/chat', chatRoutes);
-app.use('/api/cycle-tracker', cycleTrackerRoutes);
-app.use('/api/education', educationRoutes);
+app.use("/api/auth", authRoutes);
+app.use("/api/chat", chatRoutes);
+app.use("/api/cycle-tracker", cycleTrackerRoutes);
+app.use("/api/education", educationRoutes);
 
 // Health check
-app.get('/api/health', (req, res) => {
-  res.json({ message: 'YouthCare+ Backend is running' });
+app.get("/api/health", (req, res) => {
+  res.json({ message: "YouthCare+ Backend is running" });
 });
 
 // Start server
