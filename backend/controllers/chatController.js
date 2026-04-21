@@ -1,42 +1,39 @@
 const Chat = require('../models/Chat');
-const axios = require('axios');
+const { OpenAI } = require('openai');
 
-// Mock AI responses for demonstration (when API key not available)
-const getMockAIResponse = (userMessage) => {
-  const lowerMessage = userMessage.toLowerCase();
+// Initialize OpenAI client
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
-  const responses = {
-    reproductive: [
-      'It\'s important to understand your body. Menstruation is a natural process that typically lasts 3-7 days. If you have concerns, consult a healthcare provider.',
-      'Good hygiene during your period is essential. Change sanitary products regularly, wash hands before and after, and use clean water to maintain cleanliness.',
-      'Period cramps can be managed with rest, warm water, light exercise, or over-the-counter pain relief. Consult a doctor if pain is severe.',
-    ],
-    mental: [
-      'It\'s okay to feel different emotions. Taking care of your mental health is as important as physical health. Consider talking to someone you trust.',
-      'When stressed, try deep breathing exercises or spend time doing things you enjoy. If you\'re struggling, don\'t hesitate to seek help from a counselor.',
-      'Your feelings are valid. Remember that it\'s normal to have ups and downs. Reach out to friends, family, or professionals when you need support.',
-    ],
-    general: [
-      'I\'m here to help with your health questions. Feel free to ask about reproductive health, mental wellness, or general health topics.',
-      'Remember to take care of yourself! Eat healthy, stay hydrated, exercise regularly, and get enough sleep.',
-      'Your health matters. If you have concerns that need professional attention, please visit a clinic or health center.',
-    ],
-  };
+// System prompt for health advisor
+const SYSTEM_PROMPT = `You are YouthCare+, a supportive and knowledgeable health advisor for young people. Your role is to:
 
-  if (lowerMessage.includes('period') || lowerMessage.includes('menstruat') || lowerMessage.includes('cycle')) {
-    return responses.reproductive[Math.floor(Math.random() * responses.reproductive.length)];
-  } else if (lowerMessage.includes('mental') || lowerMessage.includes('stress') || lowerMessage.includes('anxiety') || lowerMessage.includes('sad')) {
-    return responses.mental[Math.floor(Math.random() * responses.mental.length)];
-  } else {
-    return responses.general[Math.floor(Math.random() * responses.general.length)];
-  }
-};
+1. Provide clear, accurate, and age-appropriate health information
+2. Focus on reproductive health, mental wellness, nutrition, and general health topics
+3. Use simple language that teens can understand
+4. Be empathetic and supportive in your responses
+5. Always encourage seeking professional help for serious concerns
+6. Respect privacy and confidentiality
+7. Be non-judgmental and inclusive
+8. Provide practical, actionable advice when appropriate
+
+Important: If someone mentions thoughts of self-harm or suicide, immediately encourage them to contact emergency services or a crisis helpline.
+
+Remember to:
+- Keep responses concise but informative
+- Ask clarifying questions when needed
+- Provide resources or suggest professional help when appropriate`;
 
 // Send message to AI
 const sendMessage = async (req, res) => {
   try {
     const { message } = req.body;
     const userId = req.userId;
+
+    if (!message || message.trim() === '') {
+      return res.status(400).json({ message: 'Message cannot be empty' });
+    }
 
     // Get or create chat session
     let chat = await Chat.findOne({ userId });
@@ -53,41 +50,38 @@ const sendMessage = async (req, res) => {
       content: message,
     });
 
-    // Get AI response
     let aiResponse;
-    
-    if (process.env.OPENAI_API_KEY) {
-      try {
-        const response = await axios.post(
-          'https://api.openai.com/v1/chat/completions',
-          {
-            model: 'gpt-3.5-turbo',
-            messages: [
-              {
-                role: 'system',
-                content: 'You are a supportive health advisor for youth. Provide simple, clear answers about reproductive health, mental health, and wellness. Always encourage seeking professional help for serious concerns.',
-              },
-              ...chat.messages.map(msg => ({
-                role: msg.role,
-                content: msg.content,
-              })),
-            ],
-            max_tokens: 150,
-          },
-          {
-            headers: {
-              'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-              'Content-Type': 'application/json',
-            },
-          }
-        );
-        aiResponse = response.data.choices[0].message.content;
-      } catch (error) {
-        console.log('OpenAI API error, using mock response');
-        aiResponse = getMockAIResponse(message);
+
+    try {
+      if (!process.env.OPENAI_API_KEY) {
+        throw new Error('OpenAI API key not configured');
       }
-    } else {
-      aiResponse = getMockAIResponse(message);
+
+      // Call OpenAI API with conversation history
+      const response = await openai.chat.completions.create({
+        model: 'gpt-3.5-turbo',
+        messages: [
+          {
+            role: 'system',
+            content: SYSTEM_PROMPT,
+          },
+          ...chat.messages.map(msg => ({
+            role: msg.role,
+            content: msg.content,
+          })),
+        ],
+        max_tokens: 500,
+        temperature: 0.7,
+      });
+
+      aiResponse = response.choices[0].message.content;
+      console.log('✅ OpenAI API response received');
+    } catch (openaiError) {
+      console.error('❌ OpenAI API error:', openaiError.message);
+      return res.status(503).json({
+        message: 'AI service temporarily unavailable. Please try again later.',
+        error: openaiError.message,
+      });
     }
 
     // Add AI response to chat
@@ -103,6 +97,7 @@ const sendMessage = async (req, res) => {
       chatHistory: chat.messages,
     });
   } catch (error) {
+    console.error('Chat error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
