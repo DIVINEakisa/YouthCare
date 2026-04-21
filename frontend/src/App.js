@@ -32,7 +32,7 @@ function AIChatSection({ user }) {
     setInput("");
     setLoading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/chat/send", {
+      const res = await fetch("https://youthcare.onrender.com/api/chat/send", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

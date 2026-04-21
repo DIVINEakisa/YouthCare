@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
@@ -8,9 +8,18 @@ export default function Login() {
     password: '',
   });
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const { login } = useContext(AuthContext);
+  const [localLoading, setLocalLoading] = useState(false);
+  const { login, user, loading: authLoading } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  // Navigate to dashboard once user is set
+  useEffect(() => {
+    console.log('Login useEffect triggered, user:', user);
+    if (user) {
+      console.log('User is set, navigating to dashboard...');
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -23,17 +32,20 @@ export default function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setLoading(true);
+    setLocalLoading(true);
+    console.log('Login form submitted with:', formData.email);
 
     try {
+      console.log('Calling login function...');
       await login(formData.email, formData.password);
-      navigate('/dashboard');
+      console.log('Login successful, waiting for navigation...');
+      // Don't navigate here - let useEffect handle it after user state updates
     } catch (err) {
+      console.error('Login catch error:', err);
+      console.error('Error response data:', err.response?.data);
       const errorMsg = err.response?.data?.message || err.message || 'Login failed. Please check your email and password.';
-      console.error('Login error:', err);
       setError(errorMsg);
-    } finally {
-      setLoading(false);
+      setLocalLoading(false);
     }
   };
 
@@ -85,13 +97,13 @@ export default function Login() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={localLoading || authLoading}
             className="w-full text-white font-semibold py-2 rounded-lg transition disabled:bg-gray-400"
-            style={{ background: loading ? '#ccc' : '#3f6212' }}
-            onMouseEnter={(e) => !loading && (e.target.style.background = '#2d4a0e')}
-            onMouseLeave={(e) => !loading && (e.target.style.background = '#3f6212')}
+            style={{ background: localLoading || authLoading ? '#ccc' : '#3f6212' }}
+            onMouseEnter={(e) => !localLoading && !authLoading && (e.target.style.background = '#2d4a0e')}
+            onMouseLeave={(e) => !localLoading && !authLoading && (e.target.style.background = '#3f6212')}
           >
-            {loading ? 'Logging in...' : 'Login'}
+            {localLoading || authLoading ? 'Logging in...' : 'Login'}
           </button>
         </form>
 

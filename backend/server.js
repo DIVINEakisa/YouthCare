@@ -5,6 +5,7 @@ const connectDB = require('./config/db');
 const authRoutes = require('./routes/auth');
 const chatRoutes = require('./routes/chat');
 const cycleTrackerRoutes = require('./routes/cycleTracker');
+const educationRoutes = require('./routes/education');
 
 const app = express();
 
@@ -19,6 +20,7 @@ connectDB();
 app.use('/api/auth', authRoutes);
 app.use('/api/chat', chatRoutes);
 app.use('/api/cycle-tracker', cycleTrackerRoutes);
+app.use('/api/education', educationRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {

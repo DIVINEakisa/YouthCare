@@ -67,17 +67,24 @@ const register = async (req, res) => {
 const login = async (req, res) => {
   try {
     const { email, password } = req.body;
+    console.log('Login attempt for email:', email);
 
     // Check if user exists
     const user = await User.findOne({ email });
+    console.log('User found in DB:', user ? { id: user._id, email: user.email } : 'NOT FOUND');
+    
     if (!user) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      console.log('Login failed: User not found for email:', email);
+      return res.status(400).json({ message: 'Invalid credentials - user not found' });
     }
 
     // Check password
     const isPasswordValid = await bcrypt.compare(password, user.password);
+    console.log('Password valid:', isPasswordValid);
+    
     if (!isPasswordValid) {
-      return res.status(400).json({ message: 'Invalid credentials' });
+      console.log('Login failed: Invalid password for email:', email);
+      return res.status(400).json({ message: 'Invalid credentials - wrong password' });
     }
 
     // Create JWT token
@@ -86,6 +93,7 @@ const login = async (req, res) => {
     };
 
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '7d' });
+    console.log('Login successful for:', email, 'Token created');
 
     res.json({
       message: 'Login successful',
@@ -99,6 +107,7 @@ const login = async (req, res) => {
       },
     });
   } catch (error) {
+    console.error('Login error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };

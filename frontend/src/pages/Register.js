@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 
@@ -11,9 +11,16 @@ export default function Register() {
     password: '',
   });
   const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-  const { register } = useContext(AuthContext);
+  const [localLoading, setLocalLoading] = useState(false);
+  const { register, user, loading: authLoading } = useContext(AuthContext);
   const navigate = useNavigate();
+
+  // Navigate to dashboard once user is set
+  useEffect(() => {
+    if (user) {
+      navigate('/dashboard');
+    }
+  }, [user, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -26,7 +33,7 @@ export default function Register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
-    setLoading(true);
+    setLocalLoading(true);
 
     try {
       await register(
@@ -36,11 +43,10 @@ export default function Register() {
         formData.email, 
         formData.password
       );
-      navigate('/dashboard');
+      // Don't navigate here - let useEffect handle it after user state updates
     } catch (err) {
       setError(err.response?.data?.message || 'Registration failed');
-    } finally {
-      setLoading(false);
+      setLocalLoading(false);
     }
   };
 
@@ -142,13 +148,13 @@ export default function Register() {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={localLoading || authLoading}
             className="w-full text-white font-semibold py-2 rounded-lg transition disabled:bg-gray-400"
-            style={{ background: loading ? '#ccc' : '#3f6212' }}
-            onMouseEnter={(e) => !loading && (e.target.style.background = '#2d4a0e')}
-            onMouseLeave={(e) => !loading && (e.target.style.background = '#3f6212')}
+            style={{ background: localLoading || authLoading ? '#ccc' : '#3f6212' }}
+            onMouseEnter={(e) => !localLoading && !authLoading && (e.target.style.background = '#2d4a0e')}
+            onMouseLeave={(e) => !localLoading && !authLoading && (e.target.style.background = '#3f6212')}
           >
-            {loading ? 'Creating Account...' : 'Create Account'}
+            {localLoading || authLoading ? 'Creating Account...' : 'Create Account'}
           </button>
         </form>
 
