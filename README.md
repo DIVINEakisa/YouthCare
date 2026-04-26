@@ -2,7 +2,47 @@
 
 YouthCare+ is a full-stack web application designed to provide accessible health information and support to youth in Rwanda. The platform includes features for reproductive health, mental wellness, educational content, clinic finder, and more.
 
-## Project Structure
+## 🆕 What's New in v2.0
+
+YouthCare+ v2.0 introduces **5 major enhancements**:
+
+### 🔔 Real Notification System
+- In-app notification center with sidebar panel
+- Unread notification badge on navbar
+- Auto-generated cycle reminders (7 days, 2 days, ovulation)
+- Health tips included in notifications
+- Mark individual/all as read or delete
+
+### ♿ Accessibility Features
+- **Text-to-Speech:** Play audio for all articles (English/Kinyarwanda)
+- **Video Captions:** YouTube videos with captions enabled
+- **Browser Notifications:** Permission-based push notifications
+- **Simple Language:** All content written plainly
+- **Large Text Support:** Zoom-friendly design
+
+### 💡 Smart Recommendations
+- AI-powered content suggestions based on category
+- Recommended articles, videos, and resources
+- Personalized education experience
+- Shows top 2 recommendations per category
+
+### 🎥 Enhanced Education Content
+- **3 content types:** Articles, Videos (YouTube), Resources
+- **5 categories:** Reproductive, Mental, Youth, Nutrition, Safety
+- **2 languages:** English and Kinyarwanda
+- **Print & Listen:** Print articles or hear them aloud
+- **Verified Sources:** WHO, UNICEF, Rwanda Biomedical Center
+
+### 📊 Improved Cycle Tracker
+- Automatic health tips based on cycle phase
+- Phase-specific advice (menstrual, follicular, ovulation, luteal)
+- Auto-generated reminders for important dates
+- Nutrition and wellness recommendations
+- Cycle phase information cards
+
+**See [IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md) for full details!**
+
+---
 
 ```
 YouthCare/

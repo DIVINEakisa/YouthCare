@@ -1,11 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import { chatAPI } from '../utils/api';
+
+const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [initialLoading, setInitialLoading] = useState(true);
+  const [recommendations, setRecommendations] = useState([]);
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
@@ -45,6 +49,9 @@ export default function Chat() {
     try {
       const response = await chatAPI.sendMessage(userMessage);
       setMessages(response.data.chatHistory);
+      
+      // Extract relevant content recommendations based on message
+      await fetchRecommendations(userMessage);
     } catch (error) {
       console.error('Error sending message:', error);
       // Add error message
@@ -54,6 +61,48 @@ export default function Chat() {
       }]);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchRecommendations = async (userMessage) => {
+    // Map keywords to categories
+    const categoryMap = {
+      'period|menstrual|menstruation|cramp|period': 'reproductive',
+      'stress|anxiety|depression|mood|mental|sad|worry': 'mental',
+      'nutrition|food|eat|diet|weight': 'nutrition',
+      'safety|protection|safe|abuse|violence': 'safety',
+      'confidence|self|body|puberty|teen|young': 'youth',
+    };
+
+    let detectedCategory = null;
+    
+    // Check which category the message relates to
+    for (const [keywords, category] of Object.entries(categoryMap)) {
+      const keywordPattern = new RegExp(keywords, 'i');
+      if (keywordPattern.test(userMessage)) {
+        detectedCategory = category;
+        break;
+      }
+    }
+
+    if (detectedCategory) {
+      try {
+        const response = await axios.get(
+          `${API_URL}/notifications/recommendations?category=${detectedCategory}&limit=3`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('token')}`,
+            },
+          },
+        );
+
+        if (response.data.success && response.data.recommendations) {
+          setRecommendations(response.data.recommendations);
+        }
+      } catch (error) {
+        console.error('Error fetching recommendations:', error);
+        setRecommendations([]);
+      }
     }
   };
 
@@ -84,20 +133,46 @@ export default function Chat() {
         )}
 
         {messages.map((msg, index) => (
-          <div
-            key={index}
-            className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
-          >
+          <div key={index}>
             <div
-              className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
-                msg.role === 'user'
-                  ? 'bg-white'
-                  : 'text-white'
-              }`}
-              style={msg.role === 'user' ? { color: '#3f6212' } : { background: '#2d4a0e' }}
+              className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}
             >
-              <p className="text-sm">{msg.content}</p>
+              <div
+                className={`max-w-xs lg:max-w-md px-4 py-2 rounded-lg ${
+                  msg.role === 'user'
+                    ? 'bg-white'
+                    : 'text-white'
+                }`}
+                style={msg.role === 'user' ? { color: '#3f6212' } : { background: '#2d4a0e' }}
+              >
+                <p className="text-sm">{msg.content}</p>
+              </div>
             </div>
+
+            {/* Show recommendations after assistant message */}
+            {msg.role === 'assistant' && index === messages.length - 1 && recommendations.length > 0 && (
+              <div className="mt-4 ml-4">
+                <div className="bg-white rounded-lg p-4 shadow-md">
+                  <h4 className="font-semibold mb-3 flex items-center gap-2" style={{ color: '#3f6212' }}>
+                    💡 Related Content for You
+                  </h4>
+                  <div className="space-y-2">
+                    {recommendations.map((rec, idx) => (
+                      <div key={idx} className="flex items-start gap-2 p-2 hover:bg-gray-50 rounded border-l-4" style={{ borderColor: '#3f6212' }}>
+                        <span className="text-lg mt-1">
+                          {rec.type === 'video' ? '🎥' : rec.type === 'resource' ? '🔗' : '📄'}
+                        </span>
+                        <div className="flex-1 min-w-0">
+                          <p className="font-medium text-sm" style={{ color: '#3f6212' }}>{rec.title}</p>
+                          <p className="text-xs text-gray-600">{rec.source}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <p className="text-xs text-gray-500 mt-3">Go to Learn & Grow to explore more content</p>
+                </div>
+              </div>
+            )}
           </div>
         ))}
 

@@ -6,6 +6,7 @@ const authRoutes = require("./routes/auth");
 const chatRoutes = require("./routes/chat");
 const cycleTrackerRoutes = require("./routes/cycleTracker");
 const educationRoutes = require("./routes/education");
+const notificationRoutes = require("./routes/notification");
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/cycle-tracker", cycleTrackerRoutes);
 app.use("/api/education", educationRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 // Health check
 app.get("/api/health", (req, res) => {

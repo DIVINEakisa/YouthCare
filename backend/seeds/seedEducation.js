@@ -285,6 +285,113 @@ const educationalContent = [
     ageGroup: "16-19",
     source: "YouthCare+",
   },
+
+  // Resources
+  {
+    category: "reproductive",
+    title: {
+      en: "Planned Parenthood - Reproductive Health",
+      rw: "Aho Kubona Ubwiyunge bw'Ubudade",
+    },
+    description: {
+      en: "External resource for reproductive health information",
+      rw: "Aho kubona amakuru ku buzima bw'ubudade",
+    },
+    content: {
+      en: "Planned Parenthood provides comprehensive reproductive health resources including contraception, STI prevention, and reproductive rights information.",
+      rw: "Aho akamaro k'amakuru k'ubwiyunge, gukurura ubudade, n'ubwiyunge.",
+    },
+    icon: "🔗",
+    type: "resource",
+    videoUrl: "https://www.plannedparenthood.org",
+    targetAudience: ["all"],
+    ageGroup: "all",
+    source: "Planned Parenthood",
+  },
+  {
+    category: "mental",
+    title: {
+      en: "Crisis Text Line - Mental Health Support",
+      rw: "SMS yo Kwitoza mu Neza",
+    },
+    description: {
+      en: "Text-based mental health crisis support",
+      rw: "Ubwiyunge mu neza bw'ubwenge",
+    },
+    content: {
+      en: "Crisis Text Line provides free 24/7 text-based mental health support. Text HOME to 741741 to reach a crisis counselor.",
+      rw: "Crisis Text Line itanga ubwiyunge bw'ubwenge buri gihe. Andika HOME kuri 741741.",
+    },
+    icon: "🔗",
+    type: "resource",
+    videoUrl: "https://www.crisistextline.org",
+    targetAudience: ["all"],
+    ageGroup: "all",
+    source: "Crisis Text Line",
+  },
+  {
+    category: "youth",
+    title: {
+      en: "RAINN - Sexual Assault Support",
+      rw: "Ubwiyunge mu Mahoro Anini",
+    },
+    description: {
+      en: "Resource for sexual assault survivors",
+      rw: "Ubwiyunge ku mahoro anini",
+    },
+    content: {
+      en: "RAINN (Rape, Abuse & Incest National Network) offers confidential support for sexual assault survivors. Call 1-800-656-HOPE (4673) or chat online.",
+      rw: "RAINN itanga ubwiyunge ku mahoro anini. Hamagara 1-800-656-HOPE cyangwa bivuganya online.",
+    },
+    icon: "🔗",
+    type: "resource",
+    videoUrl: "https://www.rainn.org",
+    targetAudience: ["all"],
+    ageGroup: "all",
+    source: "RAINN",
+  },
+  {
+    category: "nutrition",
+    title: {
+      en: "Nutrition Guide for Teens",
+      rw: "Inyanya yo Kurya neza",
+    },
+    description: {
+      en: "Healthy eating guide for adolescents",
+      rw: "Inyanya yo Kurya neza mu ntambara",
+    },
+    content: {
+      en: "MyPlate provides evidence-based nutrition information for teenagers to support healthy growth and development.",
+      rw: "MyPlate itanga amakuru k'inyanya neza mu ntambara.",
+    },
+    icon: "🔗",
+    type: "resource",
+    videoUrl: "https://www.myplate.gov",
+    targetAudience: ["all"],
+    ageGroup: "all",
+    source: "USDA MyPlate",
+  },
+  {
+    category: "safety",
+    title: {
+      en: "National Domestic Violence Hotline",
+      rw: "Ifoni yo Kubwishingiza Umubiri",
+    },
+    description: {
+      en: "Support for domestic violence and abuse",
+      rw: "Ubwiyunge ku mahoro abayobozi",
+    },
+    content: {
+      en: "The National Domestic Violence Hotline provides 24/7 confidential support for people experiencing domestic violence. Call 1-800-799-SAFE (7233) or chat online.",
+      rw: "Hotline itanga ubwiyunge mu mahoro abayobozi. Hamagara 1-800-799-SAFE.",
+    },
+    icon: "🔗",
+    type: "resource",
+    videoUrl: "https://www.thehotline.org",
+    targetAudience: ["all"],
+    ageGroup: "all",
+    source: "National DV Hotline",
+  },
 ];
 
 const seedDatabase = async () => {

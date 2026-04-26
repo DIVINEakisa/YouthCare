@@ -93,6 +93,7 @@ exports.getContentByCategory = async (req, res) => {
           language === "rw" ? item.description.rw : item.description.en,
         content: language === "rw" ? item.content.rw : item.content.en,
         icon: item.icon,
+        type: item.type,
         videoUrl: item.videoUrl,
         source: item.source,
       };
