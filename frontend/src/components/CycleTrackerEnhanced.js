@@ -7,39 +7,36 @@ const CycleTrackerEnhanced = ({ API_URL }) => {
   const [result, setResult] = useState(null);
   const [notifications, setNotifications] = useState([]);
   const [healthTips, setHealthTips] = useState([]);
-  const [savedTrackers, setSavedTrackers] = useState([]);
   const [loading, setLoading] = useState(false);
 
   // Fetch saved cycle trackers on mount
   useEffect(() => {
-    fetchSavedTrackers();
-  }, []);
+    const fetchSavedTrackers = async () => {
+      try {
+        const response = await axios.get(`${API_URL}/cycle-tracker`, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
 
-  const fetchSavedTrackers = async () => {
-    try {
-      const response = await axios.get(`${API_URL}/cycle-tracker`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      });
+        if (response.data.success && response.data.tracker) {
+          const tracker = response.data.tracker;
+          if (tracker.lastPeriodDate) {
+            setLastPeriod(tracker.lastPeriodDate.split("T")[0]);
+            setCycleLength(tracker.cycleLength || 28);
+          }
 
-      if (response.data.success && response.data.tracker) {
-        const tracker = response.data.tracker;
-        setSavedTrackers([tracker]);
-        if (tracker.lastPeriodDate) {
-          setLastPeriod(tracker.lastPeriodDate.split("T")[0]);
-          setCycleLength(tracker.cycleLength || 28);
+          // Set health tips if available
+          if (tracker.healthTips) {
+            setHealthTips(tracker.healthTips);
+          }
         }
-
-        // Set health tips if available
-        if (tracker.healthTips) {
-          setHealthTips(tracker.healthTips);
-        }
+      } catch (error) {
+        console.error("Error fetching cycle tracker:", error);
       }
-    } catch (error) {
-      console.error("Error fetching cycle tracker:", error);
-    }
-  };
+    };
+    fetchSavedTrackers();
+  }, [API_URL]);
 
   const calculate = async () => {
     if (!lastPeriod) {

@@ -10,7 +10,6 @@ const EducationEnhanced = ({ API_URL }) => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-  const [selectedItem, setSelectedItem] = useState(null);
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [recommendations, setRecommendations] = useState([]);
 
@@ -45,10 +44,28 @@ const EducationEnhanced = ({ API_URL }) => {
       }
     };
     fetchCategories();
-  }, []);
+  }, [API_URL]);
 
   // Fetch content and recommendations
   useEffect(() => {
+    const fetchRecommendations = async (category) => {
+      try {
+        const response = await axios.get(
+          `${API_URL}/notifications/recommendations?category=${category}&limit=2`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+          },
+        );
+        if (response.data.success) {
+          setRecommendations(response.data.recommendations || []);
+        }
+      } catch (err) {
+        console.error("Error fetching recommendations:", err);
+      }
+    };
+
     const fetchContent = async () => {
       setLoading(true);
       setError("");
@@ -99,26 +116,7 @@ const EducationEnhanced = ({ API_URL }) => {
       }
     };
     fetchContent();
-  }, [selectedCategory, language, selectedType]);
-
-  const fetchRecommendations = async (category) => {
-    try {
-      const response = await axios.get(
-        `${API_URL}/notifications/recommendations?category=${category}&limit=2`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        },
-      );
-
-      if (response.data.success) {
-        setRecommendations(response.data.recommendations);
-      }
-    } catch (err) {
-      console.error("Error fetching recommendations:", err);
-    }
-  };
+  }, [selectedCategory, language, selectedType, API_URL]);
 
   const handleTextToSpeech = (text) => {
     if (isSpeaking) {

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 
 const NotificationCenter = ({ isOpen, onClose, API_URL }) => {
@@ -6,13 +6,7 @@ const NotificationCenter = ({ isOpen, onClose, API_URL }) => {
   const [loading, setLoading] = useState(false);
   const [unreadCount, setUnreadCount] = useState(0);
 
-  useEffect(() => {
-    if (isOpen) {
-      fetchNotifications();
-    }
-  }, [isOpen]);
-
-  const fetchNotifications = async () => {
+  const fetchNotifications = useCallback(async () => {
     setLoading(true);
     try {
       const response = await axios.get(`${API_URL}/notifications`, {
@@ -29,7 +23,13 @@ const NotificationCenter = ({ isOpen, onClose, API_URL }) => {
       console.error("Error fetching notifications:", error);
     }
     setLoading(false);
-  };
+  }, [API_URL]);
+
+  useEffect(() => {
+    if (isOpen) {
+      fetchNotifications();
+    }
+  }, [isOpen, fetchNotifications]);
 
   const markAsRead = async (notificationId) => {
     try {
